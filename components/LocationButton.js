@@ -20,8 +20,8 @@ const LocationButton = () => {
             // const data = response.data.features[0].properties;
             // console.log(data)
 
-            const { name: city, postcode } = response.data.features[0].properties;
-            setLocation({ city, postal_code: postcode });
+            const { state, city } = response.data.features[0].properties;
+            setLocation({ state, city });
           } catch (err) {
             setError('Failed to fetch location data');
           }
@@ -41,8 +41,8 @@ const LocationButton = () => {
       {error && <p>{error}</p>}
       {location && (
         <div>
+          <p>State: {location.state}</p>
           <p>City: {location.city}</p>
-          <p>Postal Code: {location.postal_code}</p>
         </div>
       )}
     </div>

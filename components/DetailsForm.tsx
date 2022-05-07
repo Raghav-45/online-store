@@ -48,11 +48,12 @@ const DetailsForm: FC<DetailsFormProps> = ({ }) => {
         <Input className="border-neutral-700" type="text" id="email" placeholder="" />
       </div>
       <div className="grid w-full items-center gap-1.5">
-        <Label className='ml-0.5' htmlFor="email">Add Nearby Famous SHop / Mall / Landmark</Label>
+        <Label className='ml-0.5' htmlFor="email">Add Nearby Famous Shop / Mall / Landmark</Label>
         <Input className="border-neutral-700" type="text" id="email" placeholder="" />
       </div>
 
-      <LocationButton />
+      <Button className='w-full mt-2'>Save Details</Button>
+      {/* <LocationButton /> */}
     </div>
   )
 }
