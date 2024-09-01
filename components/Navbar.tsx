@@ -39,9 +39,12 @@ const Navbar: FC<NavbarProps> = ({}) => {
           <Button
             variant="outline"
             size="icon"
-            className="h-11 w-11 md:hidden bg-neutral-900 border-neutral-700 text-white"
+            className="relative h-11 w-11 md:hidden bg-neutral-900 border-neutral-700 text-white"
           >
             <ShoppingCartIcon className="h-4 w-4" />
+            <div className="absolute right-0 top-0 -mr-2 -mt-2 h-4 w-4 inline-flex items-center justify-center content-center rounded bg-blue-600 text-[10px] font-medium text-white">
+              1
+            </div>
           </Button>
         </div>
       </div>
