@@ -1,3 +1,4 @@
+import Footer from '@/components/Footer'
 import Navbar from '@/components/Navbar'
 import ProductCard from '@/components/ProductCard'
 
@@ -16,6 +17,7 @@ export default function Home() {
         <ProductCard price={300} />
         <ProductCard price={300} />
       </section>
+      <Footer />
     </div>
   )
 }

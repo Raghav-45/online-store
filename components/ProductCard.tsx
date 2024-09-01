@@ -19,7 +19,9 @@ const ProductCard: FC<ProductCardProps> = ({ price }) => {
             <h3 className="mr-4 line-clamp-2 flex-grow pl-2 text-md leading-none tracking-tight">
               Acme Circles T-Shirt
             </h3>
-            <Badge className="rounded-full">₹{price ?? '169'} INR</Badge>
+            <Badge className="rounded-full bg-blue-600 text-white">
+              ₹{price ?? '169'} INR
+            </Badge>
           </div>
         </div>
       </div>
