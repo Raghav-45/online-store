@@ -6,6 +6,8 @@ import {
   ShoppingCartIcon,
 } from 'lucide-react'
 import Link from 'next/link'
+import MenuButton from './MenuButton'
+import CartButton from './CartButton'
 
 interface NavbarProps {}
 
@@ -13,13 +15,14 @@ const Navbar: FC<NavbarProps> = ({}) => {
   return (
     <nav className="relative flex items-center justify-between p-4 lg:px-6">
       <div className="block flex-none md:hidden">
-        <Button
+        {/* <Button
           variant="outline"
           size="icon"
           className="h-11 w-11 md:hidden bg-neutral-900 border-neutral-700 text-white"
         >
           <AlignJustifyIcon className="h-3.5 w-3.5" />
-        </Button>
+        </Button> */}
+        <MenuButton />
       </div>
       <div className="flex w-full items-center">
         <div className="flex w-full md:w-1/3">
@@ -36,7 +39,7 @@ const Navbar: FC<NavbarProps> = ({}) => {
           </Link>
         </div>
         <div className="flex justify-end md:w-1/3">
-          <Button
+          {/* <Button
             variant="outline"
             size="icon"
             className="relative h-11 w-11 md:hidden bg-neutral-900 border-neutral-700 text-white"
@@ -45,7 +48,9 @@ const Navbar: FC<NavbarProps> = ({}) => {
             <div className="absolute right-0 top-0 -mr-2 -mt-2 h-4 w-4 inline-flex items-center justify-center content-center rounded bg-blue-600 text-[10px] font-medium text-white">
               1
             </div>
-          </Button>
+          </Button> */}
+
+          <CartButton />
         </div>
       </div>
     </nav>
