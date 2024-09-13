@@ -6,6 +6,8 @@ import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Textarea } from '@/components/ui/textarea'
 import { createProduct } from '@/lib/dbUtils'
+import { storage } from '@/lib/firebaseClient'
+import { ref, uploadBytes, getDownloadURL } from 'firebase/storage'
 import { Loader2Icon, UploadCloudIcon } from 'lucide-react'
 import { useState } from 'react'
 import { toast } from 'sonner'
@@ -18,13 +20,46 @@ export default function Home() {
     useState<string>('')
   const [productPriceInput, setProductPriceInput] = useState<number>(100)
 
+  const [file, setFile] = useState<File | null>(null) // State to store the selected file
+  const [uploading, setUploading] = useState<boolean>(false) // State to indicate the upload status
+  const [uploadedUrl, setUploadedUrl] = useState<string | null>(null) // State to store the uploaded image URL
+  const [imagePreview, setImagePreview] = useState<string | null>(null) // State to store image preview URL
+
+  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    if (event.target.files) {
+      const selectedFile = event.target.files[0]
+      setFile(selectedFile) // Set the selected file
+      setImagePreview(URL.createObjectURL(selectedFile)) // Generate and set the image preview URL
+    }
+  }
+
+  const handleUpload = async () => {
+    if (!file) return // Return if no file is selected
+
+    setUploading(true) // Set uploading state to true
+    const storageRef = ref(storage, `images/${file.name}`) // Create a reference to the file in Firebase Storage
+
+    try {
+      await uploadBytes(storageRef, file) // Upload the file to Firebase Storage
+      const url = await getDownloadURL(storageRef) // Get the download URL of the uploaded file
+      setUploadedUrl(url) // Set the uploaded image URL
+      console.log('File Uploaded Successfully')
+    } catch (error) {
+      console.error('Error uploading the file', error)
+    } finally {
+      setUploading(false) // Set uploading state to false
+    }
+  }
+
   async function handleSubmit() {
+    await handleUpload()
+
     setIsLoading(true)
     try {
       const playlistId = await createProduct(
         productNameInput,
         productDescriptionInput,
-        'https://cdn.shopify.com/s/files/1/0754/3727/7491/files/t-shirt-1.png',
+        uploadedUrl!,
         productPriceInput
       )
       if (playlistId) {
@@ -63,7 +98,7 @@ export default function Home() {
           <div className="flex items-center justify-center w-full">
             <label
               htmlFor="dropzone-file"
-              className="flex flex-col items-center justify-center w-full h-48 border border-white/10 border-dashed rounded-lg cursor-pointer"
+              className="relative flex flex-col items-center justify-center w-full h-48 border border-white/10 border-dashed rounded-lg cursor-pointer"
             >
               <div className="flex flex-col items-center justify-center pt-5 pb-6">
                 <UploadCloudIcon className="h-8 w-8" />
@@ -73,14 +108,26 @@ export default function Home() {
                 </p>
                 <p className="text-xs text-white/50">SVG, PNG, JPG</p>
               </div>
-              <input id="dropzone-file" type="file" className="hidden" />
+              {imagePreview && (
+                <img
+                  src={imagePreview}
+                  alt="Image preview"
+                  className="absolute h-full w-auto"
+                />
+              )}
+              <input
+                id="dropzone-file"
+                type="file"
+                className="hidden"
+                onChange={handleFileChange}
+              />
             </label>
           </div>
 
           <Input
             value={productPriceInput}
-            onChange={(e) => setProductPriceInput(e.target.value)}
-            type="text"
+            onChange={(e) => setProductPriceInput(Number(e.target.value))}
+            type="number"
             placeholder="Product Name"
           />
 

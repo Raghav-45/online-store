@@ -6,6 +6,7 @@ import {
   collection,
   deleteDoc,
   doc,
+  getDoc,
   getDocs,
   query,
   updateDoc,
@@ -38,6 +39,18 @@ async function getAllProducts() {
     data.push({ id: doc.id, ...doc.data() } as PlaylistTypeWithId)
   })
   return data
+}
+
+async function getProductById(id: string) {
+  const data: PlaylistTypeWithId[] = []
+  const q = doc(db, 'Products', id)
+  const docSnap = await getDoc(q)
+  if (docSnap.exists()) {
+    console.log('Document data:', docSnap.data())
+    return { id: docSnap.id, ...docSnap.data() } as PlaylistTypeWithId
+  } else {
+    return null
+  }
 }
 
 async function createProduct(
@@ -88,6 +101,7 @@ export {
   type PlaylistTypeWithId,
   type playlistContentType,
   getAllProducts,
+  getProductById,
   createProduct,
   addToPlaylist,
   removeFromPlaylist,
