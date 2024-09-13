@@ -4,6 +4,15 @@ import { FC } from 'react'
 
 interface FooterProps {}
 
+const links = [
+  'Home',
+  'About',
+  'Terms Conditions',
+  'Shipping Return Policy',
+  'Privacy Policy',
+  'FAQ',
+]
+
 const Footer: FC<FooterProps> = ({}) => {
   return (
     <footer className="text-sm text-neutral-500 dark:text-neutral-400">
@@ -23,54 +32,25 @@ const Footer: FC<FooterProps> = ({}) => {
 
         <nav>
           <ul>
-            <li>
+            {/* <li>
               <a
                 className="block p-2 text-lg underline-offset-4 hover:text-black hover:underline md:inline-block md:text-sm dark:hover:text-neutral-300 text-black dark:text-neutral-300"
                 href="/"
               >
-                Home
+                
               </a>
-            </li>
-            <li>
-              <a
-                className="block p-2 text-lg underline-offset-4 hover:text-black hover:underline md:inline-block md:text-sm dark:hover:text-neutral-300"
-                href="/about"
-              >
-                About
-              </a>
-            </li>
-            <li>
-              <a
-                className="block p-2 text-lg underline-offset-4 hover:text-black hover:underline md:inline-block md:text-sm dark:hover:text-neutral-300"
-                href="/terms-conditions"
-              >
-                Terms &amp; Conditions
-              </a>
-            </li>
-            <li>
-              <a
-                className="block p-2 text-lg underline-offset-4 hover:text-black hover:underline md:inline-block md:text-sm dark:hover:text-neutral-300"
-                href="/shipping-return-policy"
-              >
-                Shipping &amp; Return Policy
-              </a>
-            </li>
-            <li>
-              <a
-                className="block p-2 text-lg underline-offset-4 hover:text-black hover:underline md:inline-block md:text-sm dark:hover:text-neutral-300"
-                href="/privacy-policy"
-              >
-                Privacy Policy
-              </a>
-            </li>
-            <li>
-              <a
-                className="block p-2 text-lg underline-offset-4 hover:text-black hover:underline md:inline-block md:text-sm dark:hover:text-neutral-300"
-                href="/frequently-asked-questions"
-              >
-                FAQ
-              </a>
-            </li>
+            </li> */}
+
+            {links.map((e) => (
+              <li>
+                <a
+                  className="block p-2 text-lg underline-offset-4 hover:text-black hover:underline md:inline-block md:text-sm dark:hover:text-neutral-300"
+                  href="/about"
+                >
+                  {e}
+                </a>
+              </li>
+            ))}
           </ul>
         </nav>
       </div>
