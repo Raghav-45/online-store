@@ -1,11 +1,43 @@
+'use client'
+
 import Footer from '@/components/Footer'
 import Navbar from '@/components/Navbar'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Textarea } from '@/components/ui/textarea'
-import { Image, UploadCloudIcon } from 'lucide-react'
+import { createProduct } from '@/lib/dbUtils'
+import { Loader2Icon, UploadCloudIcon } from 'lucide-react'
+import { useState } from 'react'
+import { toast } from 'sonner'
 
 export default function Home() {
+  const [isLoading, setIsLoading] = useState(false)
+
+  const [productNameInput, setProductNameInput] = useState<string>('')
+  const [productDescriptionInput, setProductDescriptionInput] =
+    useState<string>('')
+  const [productPriceInput, setProductPriceInput] = useState<number>(100)
+
+  async function handleSubmit() {
+    setIsLoading(true)
+    try {
+      const playlistId = await createProduct(
+        productNameInput,
+        productDescriptionInput,
+        'https://cdn.shopify.com/s/files/1/0754/3727/7491/files/t-shirt-1.png',
+        productPriceInput
+      )
+      if (playlistId) {
+        toast.success('Product created successfully!')
+      }
+    } catch (error) {
+      // display error message to user
+      toast.error('Something went wrong.')
+    } finally {
+      setIsLoading(false)
+    }
+  }
+
   return (
     <div className="overflow-y-auto">
       <Navbar />
@@ -15,8 +47,18 @@ export default function Home() {
         </h1>
 
         <div className="flex flex-col space-y-4">
-          <Input type="text" placeholder="Product Name" />
-          <Textarea placeholder="Type your product description here." />
+          <Input
+            value={productNameInput}
+            onChange={(e) => setProductNameInput(e.target.value)}
+            type="text"
+            placeholder="Product Name"
+          />
+
+          <Textarea
+            value={productDescriptionInput}
+            onChange={(e) => setProductDescriptionInput(e.target.value)}
+            placeholder="Type your product description here."
+          />
 
           <div className="flex items-center justify-center w-full">
             <label
@@ -35,7 +77,17 @@ export default function Home() {
             </label>
           </div>
 
-          <Button>Save Changes</Button>
+          <Input
+            value={productPriceInput}
+            onChange={(e) => setProductPriceInput(e.target.value)}
+            type="text"
+            placeholder="Product Name"
+          />
+
+          <Button disabled={isLoading} onClick={handleSubmit}>
+            {isLoading && <Loader2Icon className="mr-2 h-5 w-5 animate-spin" />}
+            Save changes
+          </Button>
         </div>
       </section>
       <Footer />
