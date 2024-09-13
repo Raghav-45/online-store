@@ -42,9 +42,9 @@ const Footer: FC<FooterProps> = ({}) => {
             </li> */}
 
             {links.map((e) => (
-              <li>
+              <li key={e}>
                 <a
-                  className="block p-2 text-lg underline-offset-4 hover:text-black hover:underline md:inline-block md:text-sm dark:hover:text-neutral-300"
+                  className="block pl-2 py-1.5 font-semibold text-lg underline-offset-4 hover:text-black hover:underline md:inline-block md:text-sm dark:hover:text-neutral-300"
                   href="/about"
                 >
                   {e}

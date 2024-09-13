@@ -20,7 +20,6 @@ export default async function Home() {
             />
           </Link>
         ))}
-        <ProductCard name={'Manual Product'} description={'test'} price={300} />
       </section>
       <Footer />
     </div>
