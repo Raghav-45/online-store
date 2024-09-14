@@ -3,13 +3,19 @@
 import Script from 'next/script'
 import { FC } from 'react'
 import { Button } from './ui/button'
+import { createOrderHistory, PlaylistTypeWithId } from '@/lib/dbUtils'
 
 interface CheckoutButtonProps {
   amount: number
+  productObject: PlaylistTypeWithId
   info: string
 }
 
-const CheckoutButton: FC<CheckoutButtonProps> = ({ amount, info }) => {
+const CheckoutButton: FC<CheckoutButtonProps> = ({
+  amount,
+  productObject,
+  info,
+}) => {
   const createOrderId = async () => {
     try {
       const response = await fetch('/api/order', {
@@ -53,16 +59,23 @@ const CheckoutButton: FC<CheckoutButtonProps> = ({ amount, info }) => {
             razorpaySignature: response.razorpay_signature,
           }
 
-          const result = await fetch('/api/verify', {
-            method: 'POST',
-            body: JSON.stringify(data),
-            headers: { 'Content-Type': 'application/json' },
-          })
-          const res = await result.json()
-          if (res.isOk) alert('payment succeed')
-          else {
-            alert(res.message)
-          }
+          createOrderHistory(
+            data.razorpayPaymentId,
+            data.razorpayOrderId,
+            productObject.id,
+            productObject.price
+          )
+
+          // const result = await fetch('/api/verify', {
+          //   method: 'POST',
+          //   body: JSON.stringify(data),
+          //   headers: { 'Content-Type': 'application/json' },
+          // })
+          // const res = await result.json()
+          // if (res.isOk) alert('payment succeed')
+          // else {
+          //   alert(res.message)
+          // }
         },
         // prefill: {
         //   // name: name,

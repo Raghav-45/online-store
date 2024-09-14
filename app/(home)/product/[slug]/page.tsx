@@ -55,6 +55,7 @@ export default async function Page({ params }: { params: { slug: string } }) {
               <CheckoutButton
                 amount={currentProduct.price}
                 info={`Product Id: ${currentProduct.id}`}
+                productObject={currentProduct}
               />
             )}
           </div>

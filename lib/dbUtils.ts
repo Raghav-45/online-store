@@ -9,6 +9,7 @@ import {
   getDoc,
   getDocs,
   query,
+  setDoc,
   updateDoc,
   where,
 } from 'firebase/firestore'
@@ -20,8 +21,15 @@ interface PlaylistType {
   price: number
   contents: playlistContentType[]
 }
-
 type PlaylistTypeWithId = PlaylistType & { id: string }
+
+interface OrderType {
+  paymentId: string
+  orderId: string
+  productId: string
+  price: number
+}
+// type OrderTypeWithId = OrderType & { id: string }
 
 interface playlistContentType {
   name: string
@@ -72,6 +80,32 @@ async function createProduct(
   return playlistDocRef.id
 }
 
+async function createOrderHistory(
+  paymentId: string,
+  orderId: string,
+  productId: string,
+  price: number
+) {
+  const newProductObject = {
+    paymentId: paymentId,
+    orderId: orderId,
+    productId: productId,
+    price: price,
+  }
+  await setDoc(doc(db, 'Orders', paymentId), newProductObject)
+}
+
+async function getAllOrderHistory() {
+  const data: OrderType[] = []
+  const q = collection(db, 'Orders')
+  const querySnapshot = await getDocs(q)
+  querySnapshot.forEach((doc) => {
+    console.log(data)
+    data.push({ ...doc.data() } as OrderType)
+  })
+  return data
+}
+
 async function addToPlaylist(
   playlistId: string,
   whatToAdd: playlistContentType
@@ -103,6 +137,8 @@ export {
   getAllProducts,
   getProductById,
   createProduct,
+  createOrderHistory,
+  getAllOrderHistory,
   addToPlaylist,
   removeFromPlaylist,
   deletePlaylist,
