@@ -78,7 +78,7 @@ const CartButton: FC<CartButtonProps> = ({}) => {
                 <Button className="w-full rounded-2xl h-10 bg-blue-600 text-white">
                   Proceed to Checkout
                 </Button>
-                <CheckoutButton amount={100} />
+                {/* <CheckoutButton amount={100} /> */}
               </div>
             </div>
           </div>

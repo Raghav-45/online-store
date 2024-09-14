@@ -1,12 +1,15 @@
+'use client'
+
 import Script from 'next/script'
 import { FC } from 'react'
 import { Button } from './ui/button'
 
 interface CheckoutButtonProps {
   amount: number
+  info: string
 }
 
-const CheckoutButton: FC<CheckoutButtonProps> = ({ amount }) => {
+const CheckoutButton: FC<CheckoutButtonProps> = ({ amount, info }) => {
   const createOrderId = async () => {
     try {
       const response = await fetch('/api/order', {
@@ -40,7 +43,7 @@ const CheckoutButton: FC<CheckoutButtonProps> = ({ amount }) => {
         currency: 'INR',
         name: 'Online Store',
         image: 'https://mev-web-app.vercel.app/icon-192x192.png',
-        description: 'description',
+        description: info,
         order_id: orderId,
         handler: async function (response: any) {
           const data = {
@@ -61,12 +64,11 @@ const CheckoutButton: FC<CheckoutButtonProps> = ({ amount }) => {
             alert(res.message)
           }
         },
-        prefill: {
-          // name: name,
-          // email: email,
-          // contact: number,
-          notes: 'Product Name',
-        },
+        // prefill: {
+        //   // name: name,
+        //   // email: email,
+        //   // contact: number,
+        // },
         theme: {
           //   color: '#3399cc',
           color: '#000000',

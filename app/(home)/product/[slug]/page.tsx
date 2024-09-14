@@ -11,6 +11,8 @@ import {
   CarouselContent,
   CarouselItem,
 } from '@/components/ui/carousel'
+import CheckoutButton from '@/components/CheckoutButton'
+import Image from 'next/image'
 
 export default async function Page({ params }: { params: { slug: string } }) {
   const allProducts = await getAllProducts()
@@ -20,10 +22,17 @@ export default async function Page({ params }: { params: { slug: string } }) {
       <Navbar />
       <section className="mx-auto grid max-w-screen-2xl gap-4 px-4 pb-4 md:grid-cols-6 md:grid-rows-2 lg:max-h-[calc(100vh-200px)]">
         <div className="group flex flex-col h-auto w-full items-center justify-center overflow-hidden rounded-lg border bg-white hover:border-blue-600 dark:bg-black relative border-neutral-200 dark:border-neutral-800">
-          <img
+          {/* <img
             alt="Acme Circles T-Shirt"
             className="h-full w-full object-contain transition duration-300 ease-in-out group-hover:scale-105"
             src={currentProduct?.image}
+          /> */}
+
+          <Image
+            src={currentProduct?.image!}
+            alt={currentProduct?.name!}
+            className='"h-full w-full object-contain transition duration-300 ease-in-out group-hover:scale-105"'
+            fill
           />
 
           <div className="flex flex-col gap-y-2 pl-5 pt-2 self-start">
@@ -44,10 +53,17 @@ export default async function Page({ params }: { params: { slug: string } }) {
           </div>
 
           <div className="px-5 mb-5 w-full">
-            <Button className="relative w-full rounded-full h-10 bg-blue-600 text-white">
+            {/* <Button className="relative w-full rounded-full h-10 bg-blue-600 text-white">
               <PlusIcon className="absolute left-0 ml-2.5 h-6 w-6" />
               Add to Cart
-            </Button>
+            </Button> */}
+
+            {currentProduct?.price && (
+              <CheckoutButton
+                amount={currentProduct.price}
+                info={`Product Id: ${currentProduct.id}`}
+              />
+            )}
           </div>
         </div>
       </section>
