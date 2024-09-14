@@ -22,17 +22,10 @@ export default async function Page({ params }: { params: { slug: string } }) {
       <Navbar />
       <section className="mx-auto grid max-w-screen-2xl gap-4 px-4 pb-4 md:grid-cols-6 md:grid-rows-2 lg:max-h-[calc(100vh-200px)]">
         <div className="group flex flex-col h-auto w-full items-center justify-center overflow-hidden rounded-lg border bg-white hover:border-blue-600 dark:bg-black relative border-neutral-200 dark:border-neutral-800">
-          {/* <img
-            alt="Acme Circles T-Shirt"
-            className="h-full w-full object-contain transition duration-300 ease-in-out group-hover:scale-105"
-            src={currentProduct?.image}
-          /> */}
-
-          <Image
+          <img
             src={currentProduct?.image!}
             alt={currentProduct?.name!}
-            className='"h-full w-full object-contain transition duration-300 ease-in-out group-hover:scale-105"'
-            fill
+            className="h-full w-full object-contain transition duration-300 ease-in-out group-hover:scale-105"
           />
 
           <div className="flex flex-col gap-y-2 pl-5 pt-2 self-start">
