@@ -1,3 +1,5 @@
+'use client'
+
 import { useState } from 'react';
 import axios from 'axios';
 
@@ -11,12 +13,15 @@ const LocationButton = () => {
         async (position) => {
           const { latitude, longitude } = position.coords;
           try {
-            const apiKey = '8bb8c8c3507631f11bb9599e7795a718';
+            const apiKey = 'ac1e06607060453c93da63c97edb4844';
             const response = await axios.get(
-              `https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&appid=${apiKey}`
+              `https://api.geoapify.com/v1/geocode/reverse?lat=${latitude}&lon=${longitude}&apiKey=${apiKey}`
             );
-            const { name: city, zip } = response.data;
-            setLocation({ city, postal_code: zip });
+            // const data = response.data.features[0].properties;
+            // console.log(data)
+
+            const { name: city, postcode } = response.data.features[0].properties;
+            setLocation({ city, postal_code: postcode });
           } catch (err) {
             setError('Failed to fetch location data');
           }
