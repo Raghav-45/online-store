@@ -18,6 +18,8 @@ import {
 import { Button } from '@/components/ui/button'
 import { Label } from '@/components/ui/label'
 import Link from 'next/link'
+import CopyToClipboardButton from '@/components/CopyButton'
+import InputWithCopyButton from '@/components/InputWithCopyButton'
 
 interface OrderPageProps {}
 
@@ -73,37 +75,22 @@ const OrderPage: FC<OrderPageProps> = ({}) => {
                   
                   <div className="grid w-full items-center gap-1.5">
                     <Label className="ml-1" htmlFor="email">Payment Id</Label>
-                    <Input
-                      value={selectedOrder?.paymentId}
-                      type="text"
-                      placeholder={selectedOrder?.paymentId}
-                      disabled
-                    />
+                    <InputWithCopyButton text={selectedOrder?.paymentId} />
                   </div>
 
                   <div className="grid w-full items-center gap-1.5">
                     <Label className="ml-1" htmlFor="email">Order Id</Label>
-                    <Input
-                      value={selectedOrder?.orderId}
-                      type="text"
-                      placeholder={selectedOrder?.orderId}
-                      disabled
-                    />
+                    <InputWithCopyButton text={selectedOrder?.orderId} />
                   </div>
 
                   <div className="grid w-full items-center gap-1.5">
                     <Label className="ml-1" htmlFor="email">Product Id</Label>
-                    <Input
-                      value={selectedOrder?.productId}
-                      type="text"
-                      placeholder={selectedOrder?.productId}
-                      disabled
-                    />
+                    <InputWithCopyButton text={selectedOrder?.productId} />
                   </div>
                 </div>
               </DrawerHeader>
               <DrawerFooter>
-                <Link href={`/products/${selectedOrder?.productId}`}>
+                <Link href={`/product/${selectedOrder?.productId}`}>
                   <Button className='w-full'>Visit Product Page</Button>
                 </Link>
               </DrawerFooter>
