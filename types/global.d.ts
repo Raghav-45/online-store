@@ -16,6 +16,7 @@ declare interface OrderType {
   paymentId: string
   orderId: string
   productName: string
+  // ShippingAddress: string
   productId: string
   price: number
 }
