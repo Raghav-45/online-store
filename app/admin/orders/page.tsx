@@ -39,6 +39,7 @@ import CopyToClipboardButton from '@/components/CopyButton'
 import InputWithCopyButton from '@/components/InputWithCopyButton'
 import { Textarea } from '@/components/ui/textarea'
 import { PlusIcon } from 'lucide-react'
+import DetailsForm from '@/components/DetailsForm'
 
 interface OrderPageProps { }
 
@@ -230,6 +231,9 @@ const OrderPage: FC<OrderPageProps> = ({ }) => {
                   </DrawerContent>
                 </Drawer>
               </div>
+            </TabsContent>
+            <TabsContent value="completed">
+              <DetailsForm />
             </TabsContent>
           </Tabs>
         </div>
