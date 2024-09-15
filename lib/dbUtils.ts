@@ -1,5 +1,3 @@
-'use client'
-
 import { db } from './firebaseClient'
 import {
   addDoc,
@@ -16,29 +14,29 @@ import {
   where,
 } from 'firebase/firestore'
 
-interface PlaylistType {
-  name: string
-  description: string
-  image: string | null
-  price: number
-  contents: playlistContentType[]
-}
-type PlaylistTypeWithId = PlaylistType & { id: string }
+// interface PlaylistType {
+//   name: string
+//   description: string
+//   image: string | null
+//   price: number
+//   contents: playlistContentType[]
+// }
+// type PlaylistTypeWithId = PlaylistType & { id: string }
 
-interface OrderType {
-  paymentId: string
-  orderId: string
-  productId: string
-  price: number
-}
-// type OrderTypeWithId = OrderType & { id: string }
+// interface OrderType {
+//   paymentId: string
+//   orderId: string
+//   productId: string
+//   price: number
+// }
+// // type OrderTypeWithId = OrderType & { id: string }
 
-interface playlistContentType {
-  name: string
-  artist: string
-  image: string
-  videoId: string
-}
+// interface playlistContentType {
+//   name: string
+//   artist: string
+//   image: string
+//   videoId: string
+// }
 
 async function getAllProducts() {
   const data: PlaylistTypeWithId[] = []
@@ -133,9 +131,6 @@ async function deletePlaylist(playlistId: string) {
 }
 
 export {
-  type PlaylistType,
-  type PlaylistTypeWithId,
-  type playlistContentType,
   getAllProducts,
   getProductById,
   createProduct,

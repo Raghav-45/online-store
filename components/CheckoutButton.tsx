@@ -3,7 +3,7 @@
 import Script from 'next/script'
 import { FC } from 'react'
 import { Button } from './ui/button'
-import { createOrderHistory, PlaylistTypeWithId } from '@/lib/dbUtils'
+import { createOrderHistory } from '@/lib/dbUtils'
 
 interface CheckoutButtonProps {
   amount: number
