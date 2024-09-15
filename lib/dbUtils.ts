@@ -83,12 +83,14 @@ async function createProduct(
 async function createOrderHistory(
   paymentId: string,
   orderId: string,
+  productName: string,
   productId: string,
   price: number
 ) {
   const newProductObject = {
     paymentId: paymentId,
     orderId: orderId,
+    productName: productName,
     productId: productId,
     price: price,
   }

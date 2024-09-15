@@ -15,6 +15,7 @@ declare type ProductTypeWithId = PlaylistType & { id: string }
 declare interface OrderType {
   paymentId: string
   orderId: string
+  productName: string
   productId: string
   price: number
 }

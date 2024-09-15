@@ -62,6 +62,7 @@ const CheckoutButton: FC<CheckoutButtonProps> = ({
           createOrderHistory(
             data.razorpayPaymentId,
             data.razorpayOrderId,
+            productObject.name,
             productObject.id,
             productObject.price
           )
