@@ -15,15 +15,32 @@ import {
   DrawerTitle,
   DrawerTrigger,
 } from "@/components/ui/drawer"
+
+import {
+  Tabs,
+  TabsContent,
+  TabsList,
+  TabsTrigger,
+} from "@/components/ui/tabs"
+
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card"
+
 import { Button } from '@/components/ui/button'
 import { Label } from '@/components/ui/label'
 import Link from 'next/link'
 import CopyToClipboardButton from '@/components/CopyButton'
 import InputWithCopyButton from '@/components/InputWithCopyButton'
 
-interface OrderPageProps {}
+interface OrderPageProps { }
 
-const OrderPage: FC<OrderPageProps> = ({}) => {
+const OrderPage: FC<OrderPageProps> = ({ }) => {
   const [allOrders, setAllOrders] = useState<OrderType[]>()
   const [selectedOrder, setSelectedOrder] = useState<OrderType>()
 
@@ -31,7 +48,7 @@ const OrderPage: FC<OrderPageProps> = ({}) => {
     const data = await getAllOrderHistory()
     return data
   }
-  
+
   useEffect(() => {
     !allOrders && getAllOrders().then((e) => setAllOrders(e))
   }, [])
@@ -51,68 +68,112 @@ const OrderPage: FC<OrderPageProps> = ({}) => {
             placeholder="Search Product"
           />
 
-          <div className="w-full h-auto">
-          <Drawer>
-            {/* <DrawerTrigger asChild>Open</DrawerTrigger> */}
-            {allOrders && allOrders.map((e) => (
-              <DrawerTrigger key={e.paymentId} asChild>
-                <div
-                  onClick={()=> setSelectedOrder(e)}
-                  className="w-full rounded-lg h-10 bg-neutral-800 items-center flex justify-between px-4 mb-2"
-                >
-                  <p className="text-sm">{e.paymentId}</p>
-                  <p className="text-sm">{e.price} INR</p>
-                </div>
-              </DrawerTrigger>
-            ))}
-            <DrawerContent>
-              <DrawerHeader>
-                <div className='flex justify-between pb-4'>
-                  <h3 className='text-lg font-semibold leading-none tracking-tight'>{selectedOrder?.paymentId ?? "NA"}</h3>
-                  <h3>{selectedOrder?.price ?? "X"} INR</h3>
-                </div>
-                <div className='flex flex-col gap-y-4 text-left'>
-                  
-                  <div className="grid w-full items-center gap-1.5">
-                    <Label className="ml-1" htmlFor="email">Payment Id</Label>
-                    <InputWithCopyButton text={selectedOrder?.paymentId} />
-                  </div>
+          <Tabs defaultValue="pending" className="w-full">
+            <TabsList className="grid w-full grid-cols-3">
+              <TabsTrigger className="text-xs" value="pending">New Order</TabsTrigger>
+              {/* <TabsTrigger className="text-xs" value="confirmed">Confirmed</TabsTrigger> */}
+              <TabsTrigger className="text-xs" value="shipped">Shipped</TabsTrigger>
+              <TabsTrigger className="text-xs" value="cancelled">Cancelled</TabsTrigger>
+            </TabsList>
+            <TabsContent value="pending">
+              <div className="w-full h-auto">
+                <Drawer>
+                  {allOrders && allOrders.map((e) => (
+                    <DrawerTrigger key={e.paymentId} asChild>
+                      <div
+                        onClick={() => setSelectedOrder(e)}
+                        className="w-full rounded-lg h-10 bg-neutral-800 items-center flex justify-between px-4 mb-2"
+                      >
+                        <p className="text-xs">{e.paymentId}</p>
+                        <p className="text-xs">{e.price} INR</p>
+                      </div>
+                    </DrawerTrigger>
+                  ))}
+                  <DrawerContent>
+                    <DrawerHeader>
+                      <div className='flex justify-between pb-4'>
+                        <h3 className='text-lg font-semibold leading-none tracking-tight'>{selectedOrder?.paymentId ?? "NA"}</h3>
+                        <h3>{selectedOrder?.price ?? "X"} INR</h3>
+                      </div>
+                      <div className='flex flex-col gap-y-4 text-left'>
 
-                  <div className="grid w-full items-center gap-1.5">
-                    <Label className="ml-1" htmlFor="email">Order Id</Label>
-                    <InputWithCopyButton text={selectedOrder?.orderId} />
-                  </div>
+                        <div className="grid w-full items-center gap-1.5">
+                          <Label className="ml-1" htmlFor="email">Payment Id</Label>
+                          <InputWithCopyButton text={selectedOrder?.paymentId} />
+                        </div>
 
-                  <div className="grid w-full items-center gap-1.5">
-                    <Label className="ml-1" htmlFor="email">Product Id</Label>
-                    <InputWithCopyButton text={selectedOrder?.productId} />
-                  </div>
-                </div>
-              </DrawerHeader>
-              <DrawerFooter>
-                <Link href={`/product/${selectedOrder?.productId}`}>
-                  <Button className='w-full'>Visit Product Page</Button>
-                </Link>
-              </DrawerFooter>
-            </DrawerContent>
-          </Drawer>
-          </div>
+                        <div className="grid w-full items-center gap-1.5">
+                          <Label className="ml-1" htmlFor="email">Order Id</Label>
+                          <InputWithCopyButton text={selectedOrder?.orderId} />
+                        </div>
 
-          {/* <Drawer>
-            <DrawerTrigger>Open</DrawerTrigger>
-            <DrawerContent>
-              <DrawerHeader>
-                <DrawerTitle>Are you absolutely sure?</DrawerTitle>
-                <DrawerDescription>This action cannot be undone.</DrawerDescription>
-              </DrawerHeader>
-              <DrawerFooter>
-                <Button>Submit</Button>
-                <DrawerClose>
-                  <Button variant="outline">Cancel</Button>
-                </DrawerClose>
-              </DrawerFooter>
-            </DrawerContent>
-          </Drawer> */}
+                        <div className="grid w-full items-center gap-1.5">
+                          <Label className="ml-1" htmlFor="email">Product Id</Label>
+                          <InputWithCopyButton text={selectedOrder?.productId} />
+                        </div>
+                      </div>
+                    </DrawerHeader>
+                    <DrawerFooter>
+                      <div className='flex gap-x-2'>
+                        <Button className='w-1/2 bg-red-500' variant="outline">Cancel</Button>
+                        {/* <Link className='w-full' href={`/product/${selectedOrder?.productId}`}>
+                          <Button className='w-full'>Visit Product Page</Button>
+                        </Link> */}
+                        <Button className='w-1/2 bg-blue-500' variant="outline">Ship</Button>
+                      </div>
+                    </DrawerFooter>
+                  </DrawerContent>
+                </Drawer>
+              </div>
+            </TabsContent>
+            <TabsContent value="confirmed">
+              <div className="w-full h-auto">
+                <Drawer>
+                  {allOrders && allOrders.slice(1, 4).map((e) => (
+                    <DrawerTrigger key={e.paymentId} asChild>
+                      <div
+                        onClick={() => setSelectedOrder(e)}
+                        className="w-full rounded-lg h-10 bg-neutral-800 items-center flex justify-between px-4 mb-2"
+                      >
+                        <p className="text-xs">{e.paymentId}</p>
+                        <p className="text-xs">{e.price} INR</p>
+                      </div>
+                    </DrawerTrigger>
+                  ))}
+                  <DrawerContent>
+                    <DrawerHeader>
+                      <div className='flex justify-between pb-4'>
+                        <h3 className='text-lg font-semibold leading-none tracking-tight'>{selectedOrder?.paymentId ?? "NA"}</h3>
+                        <h3>{selectedOrder?.price ?? "X"} INR</h3>
+                      </div>
+                      <div className='flex flex-col gap-y-4 text-left'>
+
+                        <div className="grid w-full items-center gap-1.5">
+                          <Label className="ml-1" htmlFor="email">Payment Id</Label>
+                          <InputWithCopyButton text={selectedOrder?.paymentId} />
+                        </div>
+
+                        <div className="grid w-full items-center gap-1.5">
+                          <Label className="ml-1" htmlFor="email">Order Id</Label>
+                          <InputWithCopyButton text={selectedOrder?.orderId} />
+                        </div>
+
+                        <div className="grid w-full items-center gap-1.5">
+                          <Label className="ml-1" htmlFor="email">Product Id</Label>
+                          <InputWithCopyButton text={selectedOrder?.productId} />
+                        </div>
+                      </div>
+                    </DrawerHeader>
+                    <DrawerFooter>
+                      <Link href={`/product/${selectedOrder?.productId}`}>
+                        <Button className='w-full'>Visit Product Page</Button>
+                      </Link>
+                    </DrawerFooter>
+                  </DrawerContent>
+                </Drawer>
+              </div>
+            </TabsContent>
+          </Tabs>
         </div>
       </section>
     </div>
