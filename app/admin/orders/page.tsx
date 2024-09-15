@@ -16,7 +16,7 @@ const OrderPage: FC<OrderPageProps> = ({}) => {
   }
   
   useEffect(() => {
-    getAllOrders().then((e) => setAllOrders(e))
+    !allOrders && getAllOrders().then((e) => setAllOrders(e))
   }, [])
   return (
     <div className="overflow-y-auto">
