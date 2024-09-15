@@ -53,10 +53,9 @@ const OrderPage: FC<OrderPageProps> = ({}) => {
           <Drawer>
             {/* <DrawerTrigger asChild>Open</DrawerTrigger> */}
             {allOrders && allOrders.map((e) => (
-              <DrawerTrigger asChild>
+              <DrawerTrigger key={e.paymentId} asChild>
                 <div
                   onClick={()=> setSelectedOrder(e)}
-                  key={e.paymentId}
                   className="w-full rounded-lg h-10 bg-neutral-800 items-center flex justify-between px-4 mb-2"
                 >
                   <p className="text-sm">{e.paymentId}</p>
