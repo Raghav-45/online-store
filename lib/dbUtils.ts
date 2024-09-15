@@ -39,23 +39,23 @@ import {
 // }
 
 async function getAllProducts() {
-  const data: PlaylistTypeWithId[] = []
+  const data: ProductTypeWithId[] = []
   const q = collection(db, 'Products')
   const querySnapshot = await getDocs(q)
   querySnapshot.forEach((doc) => {
     // console.log(data)
-    data.push({ id: doc.id, ...doc.data() } as PlaylistTypeWithId)
+    data.push({ id: doc.id, ...doc.data() } as ProductTypeWithId)
   })
   return data
 }
 
 async function getProductById(id: string) {
-  const data: PlaylistTypeWithId[] = []
+  const data: ProductTypeWithId[] = []
   const q = doc(db, 'Products', id)
   const docSnap = await getDoc(q)
   if (docSnap.exists()) {
     // console.log('Document data:', docSnap.data())
-    return { id: docSnap.id, ...docSnap.data() } as PlaylistTypeWithId
+    return { id: docSnap.id, ...docSnap.data() } as ProductTypeWithId
   } else {
     return null
   }

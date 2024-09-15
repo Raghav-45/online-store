@@ -7,7 +7,7 @@ import { createOrderHistory } from '@/lib/dbUtils'
 
 interface CheckoutButtonProps {
   amount: number
-  productObject: PlaylistTypeWithId
+  productObject: ProductTypeWithId
   info: string
 }
 

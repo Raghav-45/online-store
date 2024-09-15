@@ -68,14 +68,14 @@ const OrderPage: FC<OrderPageProps> = ({ }) => {
             placeholder="Search Product"
           />
 
-          <Tabs defaultValue="pending" className="w-full">
-            <TabsList className="grid w-full grid-cols-3">
-              <TabsTrigger className="text-xs" value="pending">New Order</TabsTrigger>
-              {/* <TabsTrigger className="text-xs" value="confirmed">Confirmed</TabsTrigger> */}
-              <TabsTrigger className="text-xs" value="shipped">Shipped</TabsTrigger>
+          <Tabs defaultValue="new-order" className="w-full">
+            <TabsList className="grid w-full grid-cols-4">
+              <TabsTrigger className="text-xs" value="new-order">New Order</TabsTrigger>
+              <TabsTrigger className="text-xs" value="shipping">Shipping</TabsTrigger>
+              <TabsTrigger className="text-xs" value="completed">Completed</TabsTrigger>
               <TabsTrigger className="text-xs" value="cancelled">Cancelled</TabsTrigger>
             </TabsList>
-            <TabsContent value="pending">
+            <TabsContent value="new-order">
               <div className="w-full h-auto">
                 <Drawer>
                   {allOrders && allOrders.map((e) => (
@@ -126,7 +126,7 @@ const OrderPage: FC<OrderPageProps> = ({ }) => {
                 </Drawer>
               </div>
             </TabsContent>
-            <TabsContent value="confirmed">
+            <TabsContent value="shipping">
               <div className="w-full h-auto">
                 <Drawer>
                   {allOrders && allOrders.slice(1, 4).map((e) => (
@@ -165,9 +165,9 @@ const OrderPage: FC<OrderPageProps> = ({ }) => {
                       </div>
                     </DrawerHeader>
                     <DrawerFooter>
-                      <Link href={`/product/${selectedOrder?.productId}`}>
-                        <Button className='w-full'>Visit Product Page</Button>
-                      </Link>
+                      {/* <Link href={`/product/${selectedOrder?.productId}`}> */}
+                        <Button className='w-full'>Delivered</Button>
+                      {/* </Link> */}
                     </DrawerFooter>
                   </DrawerContent>
                 </Drawer>

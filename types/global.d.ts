@@ -3,14 +3,14 @@ declare interface Window {
 }
 
 
-declare interface PlaylistType {
+declare interface ProductType {
   name: string
   description: string
   image: string | null
   price: number
   contents: playlistContentType[]
 }
-declare type PlaylistTypeWithId = PlaylistType & { id: string }
+declare type ProductTypeWithId = PlaylistType & { id: string }
 
 declare interface OrderType {
   paymentId: string
