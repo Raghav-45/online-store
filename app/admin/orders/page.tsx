@@ -5,9 +5,9 @@ import { Input } from '@/components/ui/input'
 import { getAllOrderHistory } from '@/lib/dbUtils'
 import { FC, useEffect, useState } from 'react'
 
-interface orderPageProps {}
+interface OrderPageProps {}
 
-const orderPage: FC<orderPageProps> = ({}) => {
+const OrderPage: FC<OrderPageProps> = ({}) => {
   const [allOrders, setAllOrders] = useState<OrderType[]>()
 
   const getAllOrders = async () => {
@@ -51,4 +51,4 @@ const orderPage: FC<orderPageProps> = ({}) => {
   )
 }
 
-export default orderPage
+export default OrderPage
