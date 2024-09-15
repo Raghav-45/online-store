@@ -113,7 +113,7 @@ const OrderPage: FC<OrderPageProps> = ({ }) => {
                         </div>
                         <div className='flex flex-col w-2/3 text-left py-2.5 gap-y-1.5'>
                           <div className='w-full pr-2'>
-                            <h3 className='text-lg font-extrabold line-clamp-2 leading-none tracking-tight text-ellipsis overflow-hidden'>Men's Sportswear Shoes</h3>
+                            <h3 className='text-lg font-extrabold line-clamp-2 leading-none tracking-tight text-ellipsis overflow-hidden'>Mens Sportswear Shoes</h3>
                           </div>
                           <p className='text-md leading-none tracking-tight font-semibold'>Colour: green</p>
                           <p className='text-md leading-none tracking-tight font-semibold'>Size: 12</p>
