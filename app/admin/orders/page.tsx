@@ -2,26 +2,22 @@
 
 import Navbar from '@/components/Navbar'
 import { Input } from '@/components/ui/input'
-// import { getAllOrderHistory } from '@/lib/dbUtils'
-import { db } from '@/lib/firebaseClient'
-import { collection, getDocs } from 'firebase/firestore'
-import { FC } from 'react'
+import { getAllOrderHistory } from '@/lib/dbUtils'
+import { FC, useEffect, useState } from 'react'
 
 interface orderPageProps {}
 
-const orderPage: FC<orderPageProps> = async ({}) => {
-  async function getAllOrderHistory() {
-    const data: OrderType[] = []
-    const q = collection(db, 'Orders')
-    const querySnapshot = await getDocs(q)
-    querySnapshot.forEach((doc) => {
-      console.log(data)
-      data.push({ ...doc.data() } as OrderType)
-    })
+const orderPage: FC<orderPageProps> = ({}) => {
+  const [allOrders, setAllOrders] = useState<OrderType[]>()
+
+  const getAllOrders = async () => {
+    const data = await getAllOrderHistory()
     return data
   }
-  const allOrders = await getAllOrderHistory()
   
+  useEffect(() => {
+    getAllOrders().then((e) => setAllOrders(e))
+  }, [])
   return (
     <div className="overflow-y-auto">
       <Navbar />
@@ -39,7 +35,7 @@ const orderPage: FC<orderPageProps> = async ({}) => {
           />
 
           <div className="w-full h-auto">
-            {allOrders.map((e) => (
+            {allOrders && allOrders.map((e) => (
               <div
                 key={e.paymentId}
                 className="w-full rounded-lg h-10 bg-neutral-800 items-center flex justify-between px-4 mb-2"

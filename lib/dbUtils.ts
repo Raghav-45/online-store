@@ -43,7 +43,7 @@ async function getAllProducts() {
   const q = collection(db, 'Products')
   const querySnapshot = await getDocs(q)
   querySnapshot.forEach((doc) => {
-    console.log(data)
+    // console.log(data)
     data.push({ id: doc.id, ...doc.data() } as PlaylistTypeWithId)
   })
   return data
@@ -54,7 +54,7 @@ async function getProductById(id: string) {
   const q = doc(db, 'Products', id)
   const docSnap = await getDoc(q)
   if (docSnap.exists()) {
-    console.log('Document data:', docSnap.data())
+    // console.log('Document data:', docSnap.data())
     return { id: docSnap.id, ...docSnap.data() } as PlaylistTypeWithId
   } else {
     return null
@@ -100,7 +100,7 @@ async function getAllOrderHistory() {
   const q = collection(db, 'Orders')
   const querySnapshot = await getDocs(q)
   querySnapshot.forEach((doc) => {
-    console.log(data)
+    // console.log(data)
     data.push({ ...doc.data() } as OrderType)
   })
   return data
