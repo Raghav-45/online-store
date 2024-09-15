@@ -121,7 +121,7 @@ const OrderPage: FC<OrderPageProps> = ({ }) => {
                         </div>
                       </div>
 
-                      <div className='flex flex-col gap-y-4 text-left'>
+                      <div className='flex flex-col gap-y-4 text-left'>                        
                         <div className="grid w-full items-center gap-1.5">
                           <Label className="ml-1" htmlFor="email">Shipping Address</Label>
                           <Textarea
@@ -132,20 +132,43 @@ const OrderPage: FC<OrderPageProps> = ({ }) => {
                           />
                         </div>
 
-                        <div className="grid w-full items-center gap-1.5">
+                        <div className='flex gap-x-2'>
+                          <div className="grid w-full items-center gap-1.5">
+                            <Label className="ml-1" htmlFor="email">Primary Contact</Label>
+                            {/* <InputWithCopyButton text={"9315988300"} /> */}
+                            <Input
+                              value={"9315988300"}
+                              type="text"
+                              placeholder={"9315988300"}
+                              disabled
+                            />
+                          </div>
+                          <div className="grid w-full items-center gap-1.5">
+                            <Label className="ml-1" htmlFor="email">Alternate Contact</Label>
+                            {/* <InputWithCopyButton text={"1234567890"} /> */}
+                            <Input
+                              value={"1234567890"}
+                              type="text"
+                              placeholder={"1234567890"}
+                              disabled
+                            />
+                          </div>
+                        </div>
+
+                        {/* <div className="grid w-full items-center gap-1.5">
                           <Label className="ml-1" htmlFor="email">Payment Id</Label>
                           <InputWithCopyButton text={selectedOrder?.paymentId} />
-                        </div>
+                        </div> */}
 
                         <div className="grid w-full items-center gap-1.5">
                           <Label className="ml-1" htmlFor="email">Order Id</Label>
                           <InputWithCopyButton text={selectedOrder?.orderId} />
                         </div>
 
-                        <div className="grid w-full items-center gap-1.5">
+                        {/* <div className="grid w-full items-center gap-1.5">
                           <Label className="ml-1" htmlFor="email">Product Id</Label>
                           <InputWithCopyButton text={selectedOrder?.productId} />
-                        </div>
+                        </div> */}
                       </div>
                     </DrawerHeader>
                     <DrawerFooter>
