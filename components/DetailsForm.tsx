@@ -11,17 +11,17 @@ const DetailsForm: FC<DetailsFormProps> = ({ }) => {
   return (
     <div className='flex flex-col gap-y-4 pt-4'>
       <div className="grid w-full items-center gap-1.5">
-        <Label className='ml-0.5' htmlFor="email">Name</Label>
-        <Input className="border-neutral-700" type="text" id="email" placeholder="" />
+        <Label className='ml-0.5' htmlFor="name">Name</Label>
+        <Input className="border-neutral-700" type="text" id="name" placeholder="" />
       </div>
       <div className="grid w-full items-center gap-1.5">
-        <Label className='ml-0.5' htmlFor="email">Contact</Label>
-        <Input className="border-neutral-700" type="text" id="email" placeholder="" />
+        <Label className='ml-0.5' htmlFor="contact">Contact</Label>
+        <Input className="border-neutral-700" type="text" id="contact" placeholder="" />
       </div>
       <div className="grid w-full items-center gap-1.5">
-        <Label className='ml-0.5' htmlFor="email">Pincode</Label>
+        <Label className='ml-0.5' htmlFor="pincode">Pincode</Label>
         <div className='flex gap-x-4'>
-          <Input className='w-1/2 border-neutral-700' type="text" id="email" placeholder="" />
+          <Input className='w-1/2 border-neutral-700' type="text" id="pincode" placeholder="" />
           <Button className='w-1/2'>
             <LocateIcon className="mr-1.5 h-4 w-4" /> Use my location
           </Button>
@@ -30,26 +30,26 @@ const DetailsForm: FC<DetailsFormProps> = ({ }) => {
 
       <div className="grid grid-cols-2 gap-4">
         <div className="grid w-full items-center gap-1.5">
-          <Label className='ml-0.5' htmlFor="email">State</Label>
-          <Input className="border-neutral-700" type="text" id="email" placeholder="" />
+          <Label className='ml-0.5' htmlFor="state">State</Label>
+          <Input className="border-neutral-700" type="text" id="state" placeholder="" />
         </div>
         <div className="grid w-full items-center gap-1.5">
-          <Label className='ml-0.5' htmlFor="email">City</Label>
-          <Input className="border-neutral-700" type="text" id="email" placeholder="" />
+          <Label className='ml-0.5' htmlFor="city">City</Label>
+          <Input className="border-neutral-700" type="text" id="city" placeholder="" />
         </div>
       </div>
 
       <div className="grid w-full items-center gap-1.5">
-        <Label className='ml-0.5' htmlFor="email">House No., Building Name (Required)</Label>
-        <Input className="border-neutral-700" type="text" id="email" placeholder="" />
+        <Label className='ml-0.5' htmlFor="house">House No., Building Name (Required)</Label>
+        <Input className="border-neutral-700" type="text" id="house" placeholder="" />
       </div>
       <div className="grid w-full items-center gap-1.5">
-        <Label className='ml-0.5' htmlFor="email">Road name, Area, Colony (Required)</Label>
-        <Input className="border-neutral-700" type="text" id="email" placeholder="" />
+        <Label className='ml-0.5' htmlFor="area">Road name, Area, Colony (Required)</Label>
+        <Input className="border-neutral-700" type="text" id="area" placeholder="" />
       </div>
       <div className="grid w-full items-center gap-1.5">
-        <Label className='ml-0.5' htmlFor="email">Add Nearby Famous Shop / Mall / Landmark</Label>
-        <Input className="border-neutral-700" type="text" id="email" placeholder="" />
+        <Label className='ml-0.5' htmlFor="nearby">Add Nearby Famous Shop / Mall / Landmark</Label>
+        <Input className="border-neutral-700" type="text" id="nearby" placeholder="" />
       </div>
 
       <Button className='w-full mt-2'>Save Details</Button>
