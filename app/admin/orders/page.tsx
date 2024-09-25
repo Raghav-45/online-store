@@ -96,7 +96,7 @@ const OrderPage: FC<OrderPageProps> = ({}) => {
               <div className="w-full h-auto">
                 <Drawer>
                   <Table>
-                    <TableCaption>A list of your recent invoices.</TableCaption>
+                    <TableCaption>A list of your recent orders.</TableCaption>
                     <TableHeader>
                       <TableRow>
                         <TableHead>Invoice</TableHead>
