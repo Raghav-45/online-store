@@ -59,13 +59,20 @@ const CheckoutButton: FC<CheckoutButtonProps> = ({
             razorpaySignature: response.razorpay_signature,
           }
 
-          createOrderHistory(
-            data.razorpayPaymentId,
-            data.razorpayOrderId,
-            productObject.name,
-            productObject.id,
-            productObject.price
-          )
+          createOrderHistory({
+            paymentId: data.razorpayPaymentId,
+            orderId: data.razorpayOrderId,
+            productId: productObject.id,
+            productName: productObject.name,
+            price: productObject.price,
+            shippingAddress: {
+              fullName: 's',
+              addressLine1: 's',
+              city: 's',
+              postalCode: 's',
+              country: 's',
+            },
+          })
 
           // const result = await fetch('/api/verify', {
           //   method: 'POST',

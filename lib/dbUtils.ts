@@ -9,34 +9,11 @@ import {
   getDoc,
   getDocs,
   query,
+  serverTimestamp,
   setDoc,
   updateDoc,
   where,
 } from 'firebase/firestore'
-
-// interface PlaylistType {
-//   name: string
-//   description: string
-//   image: string | null
-//   price: number
-//   contents: playlistContentType[]
-// }
-// type PlaylistTypeWithId = PlaylistType & { id: string }
-
-// interface OrderType {
-//   paymentId: string
-//   orderId: string
-//   productId: string
-//   price: number
-// }
-// // type OrderTypeWithId = OrderType & { id: string }
-
-// interface playlistContentType {
-//   name: string
-//   artist: string
-//   image: string
-//   videoId: string
-// }
 
 async function getAllProducts() {
   const data: ProductTypeWithId[] = []
@@ -80,21 +57,26 @@ async function createProduct(
   return playlistDocRef.id
 }
 
-async function createOrderHistory(
-  paymentId: string,
-  orderId: string,
-  productName: string,
-  productId: string,
-  price: number
-) {
-  const newProductObject = {
-    paymentId: paymentId,
-    orderId: orderId,
-    productName: productName,
-    productId: productId,
-    price: price,
+async function createOrderHistory({
+  paymentId,
+  orderId,
+  productId,
+  productName,
+  price,
+  shippingAddress,
+}: Partial<OrderType>) {
+  const newProductObject: OrderType = {
+    paymentId: paymentId!,
+    orderId: orderId!,
+    productId: productId!,
+    productName: productName!,
+    price: price!,
+    shippingAddress: shippingAddress!,
+    status: 'New',
+    orderDate: serverTimestamp(),
+    deliveryDate: null,
   }
-  await setDoc(doc(db, 'Orders', paymentId), newProductObject)
+  await setDoc(doc(db, 'Orders', paymentId!), newProductObject)
 }
 
 async function getAllOrderHistory() {
@@ -108,29 +90,26 @@ async function getAllOrderHistory() {
   return data
 }
 
-async function addToPlaylist(
-  playlistId: string,
-  whatToAdd: playlistContentType
-) {
-  const playlistDocRef = doc(db, 'playlists', playlistId)
+async function updateOrderStatus(id: string, newStatus: orderStatusType) {
+  const playlistDocRef = doc(db, 'Orders', id)
   await updateDoc(playlistDocRef, {
-    contents: arrayUnion(whatToAdd),
+    status: newStatus,
   })
 }
 
-async function removeFromPlaylist(
-  playlistId: string,
-  whatToRemove: playlistContentType
-) {
-  const playlistDocRef = doc(db, 'playlists', playlistId)
-  await updateDoc(playlistDocRef, {
-    contents: arrayRemove(whatToRemove),
-  })
-}
+// async function addToPlaylist(
+//   playlistId: string,
+//   whatToAdd: playlistContentType
+// ) {
+//   const playlistDocRef = doc(db, 'playlists', playlistId)
+//   await updateDoc(playlistDocRef, {
+//     contents: arrayUnion(whatToAdd),
+//   })
+// }
 
-async function deletePlaylist(playlistId: string) {
-  await deleteDoc(doc(db, 'playlists', playlistId))
-}
+// async function deletePlaylist(playlistId: string) {
+//   await deleteDoc(doc(db, 'playlists', playlistId))
+// }
 
 export {
   getAllProducts,
@@ -138,7 +117,5 @@ export {
   createProduct,
   createOrderHistory,
   getAllOrderHistory,
-  addToPlaylist,
-  removeFromPlaylist,
-  deletePlaylist,
+  updateOrderStatus,
 }
