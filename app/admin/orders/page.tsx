@@ -6,6 +6,17 @@ import { getAllOrderHistory } from '@/lib/dbUtils'
 import { FC, useEffect, useState } from 'react'
 
 import {
+  Table,
+  TableBody,
+  TableCaption,
+  TableCell,
+  TableFooter,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from '@/components/ui/table'
+
+import {
   Drawer,
   DrawerClose,
   DrawerContent,
@@ -84,18 +95,53 @@ const OrderPage: FC<OrderPageProps> = ({}) => {
             <TabsContent value="new-order">
               <div className="w-full h-auto">
                 <Drawer>
-                  {allOrders &&
-                    allOrders.map((e) => (
-                      <DrawerTrigger key={e.paymentId} asChild>
-                        <div
-                          onClick={() => setSelectedOrder(e)}
-                          className="w-full rounded-lg h-10 bg-neutral-800 items-center flex justify-between px-4 mb-2"
-                        >
-                          <p className="text-xs">{e.paymentId}</p>
-                          <p className="text-xs">{e.price} INR</p>
-                        </div>
-                      </DrawerTrigger>
-                    ))}
+                  <Table>
+                    <TableCaption>A list of your recent invoices.</TableCaption>
+                    <TableHeader>
+                      <TableRow>
+                        <TableHead>Invoice</TableHead>
+                        {/* <TableHead>Status</TableHead> */}
+                        <TableHead>Method</TableHead>
+                        <TableHead className="text-right w-[100px]">
+                          Amount
+                        </TableHead>
+                      </TableRow>
+                    </TableHeader>
+                    <TableBody>
+                      {allOrders &&
+                        allOrders.map((e) => (
+                          // <DrawerTrigger key={e.paymentId} asChild>
+                          //   <div
+                          //     onClick={() => setSelectedOrder(e)}
+                          //     className="w-full rounded-lg h-10 bg-neutral-800 items-center flex justify-between px-4 mb-2"
+                          //   >
+                          //     <p className="text-xs">{e.paymentId}</p>
+                          //     <p className="text-xs">{e.price} INR</p>
+                          //   </div>
+                          // </DrawerTrigger>
+
+                          <DrawerTrigger key={e.paymentId} asChild>
+                            <TableRow onClick={() => setSelectedOrder(e)}>
+                              <TableCell className="font-medium">
+                                {e.paymentId.replace('pay_', '')}
+                              </TableCell>
+                              {/* <TableCell>Paid</TableCell> */}
+                              <TableCell>Credit Card</TableCell>
+                              <TableCell className="text-right">
+                                {/* $250.00 */}
+                                {e.price} INR
+                              </TableCell>
+                            </TableRow>
+                          </DrawerTrigger>
+                        ))}
+                    </TableBody>
+                    <TableFooter>
+                      <TableRow>
+                        <TableCell colSpan={2}>Total</TableCell>
+                        <TableCell className="text-right">500 INR</TableCell>
+                      </TableRow>
+                    </TableFooter>
+                  </Table>
                   <DrawerContent>
                     <DrawerHeader>
                       <div className="flex justify-between pb-2 items-center">
