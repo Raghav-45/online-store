@@ -2,7 +2,6 @@ declare interface Window {
   Razorpay: any
 }
 
-
 declare interface ProductType {
   name: string
   description: string
@@ -10,7 +9,7 @@ declare interface ProductType {
   price: number
   contents: playlistContentType[]
 }
-declare type ProductTypeWithId = PlaylistType & { id: string }
+declare type ProductTypeWithId = ProductType & { id: string }
 
 declare interface OrderType {
   paymentId: string
@@ -21,10 +20,3 @@ declare interface OrderType {
   price: number
 }
 // type OrderTypeWithId = OrderType & { id: string }
-
-declare interface playlistContentType {
-  name: string
-  artist: string
-  image: string
-  videoId: string
-}
