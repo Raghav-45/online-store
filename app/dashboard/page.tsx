@@ -358,47 +358,4 @@ const OrderPage: FC<OrderPageProps> = ({}) => {
   )
 }
 
-// const DrawerActionButtons = ({ selectedOrder }: OrderType) => {
-//   return (
-//     <div className="flex gap-x-2">
-//       {selectedOrder?.status != 'completed' &&
-//         selectedOrder?.status != 'cancelled' && (
-//           <Button
-//             onClick={() =>
-//               handleActionButtonClick(selectedOrder?.paymentId, 'cancelled')
-//             }
-//             className="w-full bg-red-500"
-//             variant="outline"
-//           >
-//             Cancel
-//           </Button>
-//         )}
-
-//       {selectedOrder?.status == 'New' && (
-//         <Button
-//           onClick={() =>
-//             handleActionButtonClick(selectedOrder?.paymentId, 'shipping')
-//           }
-//           className="w-full bg-blue-500"
-//           variant="outline"
-//         >
-//           Ship
-//         </Button>
-//       )}
-
-//       {selectedOrder?.status == 'shipping' && (
-//         <Button
-//           onClick={() =>
-//             handleActionButtonClick(selectedOrder?.paymentId, 'shipping')
-//           }
-//           className="w-full bg-blue-500"
-//           variant="outline"
-//         >
-//           Delivered / Completed
-//         </Button>
-//       )}
-//     </div>
-//   )
-// }
-
 export default OrderPage

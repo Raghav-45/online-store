@@ -66,11 +66,14 @@ const CheckoutButton: FC<CheckoutButtonProps> = ({
             productName: productObject.name,
             price: productObject.price,
             shippingAddress: {
-              fullName: 's',
-              addressLine1: 's',
-              city: 's',
-              postalCode: 's',
-              country: 's',
+              fullName: 'Raghav',
+              Contact: '9315988300',
+              addressLine1: 'A-69',
+              addressLine2: 'Shivaji Vihar',
+              nearby: 'Capital Public School',
+              state: 'New Delhi',
+              city: 'Delhi',
+              postalCode: '110027',
             },
           })
 

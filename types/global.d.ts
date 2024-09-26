@@ -12,10 +12,13 @@ declare type ProductTypeWithId = ProductType & { id: string }
 
 interface ShippingAddressType {
   fullName: string
-  addressLine1: string
+  Contact: string
+  addressLine1: string // House No.
+  addressLine2: string // Road Name
+  nearby: string // Nearby
+  state: string
   city: string
   postalCode: string
-  country: string
 }
 
 type orderStatusType = 'New' | 'shipping' | 'completed' | 'cancelled'
