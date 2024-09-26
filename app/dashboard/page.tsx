@@ -117,11 +117,11 @@ const OrderPage: FC<OrderPageProps> = ({}) => {
 
           <Tabs
             onValueChange={(e) => setSelectedFilterStatus(e)}
-            defaultValue="new-order"
+            defaultValue="New"
             className="w-auto"
           >
             <TabsList className="grid w-full grid-cols-4">
-              <TabsTrigger className="text-xs" value="new-order">
+              <TabsTrigger className="text-xs" value="New">
                 New Order
               </TabsTrigger>
               <TabsTrigger className="text-xs" value="shipping">
@@ -213,13 +213,41 @@ const OrderPage: FC<OrderPageProps> = ({}) => {
                       </div>
                     </div>
 
-                    <div className="flex flex-col gap-y-4 text-left">
-                      <div className="grid w-full items-center gap-1.5">
-                        <Label className="ml-1" htmlFor="email">
+                    <div className="flex flex-col gap-y-2 text-left">
+                      <div className="flex gap-x-2">
+                        <div className="grid w-full items-center gap-y-0.5">
+                          <Label className="text-xs ml-0.5" htmlFor="email">
+                            Full Name
+                          </Label>
+                          <Input
+                            value={selectedOrder?.shippingAddress.fullName}
+                            type="text"
+                            placeholder={
+                              selectedOrder?.shippingAddress.fullName
+                            }
+                            disabled
+                          />
+                        </div>
+                        <div className="grid w-full items-center gap-y-0.5">
+                          <Label className="text-xs ml-0.5" htmlFor="email">
+                            Primary Contact
+                          </Label>
+                          <Input
+                            value={selectedOrder?.shippingAddress.Contact}
+                            type="text"
+                            placeholder={selectedOrder?.shippingAddress.Contact}
+                            disabled
+                          />
+                        </div>
+                      </div>
+
+                      <div className="grid w-full items-center gap-y-0.5">
+                        <Label className="text-xs ml-0.5" htmlFor="email">
                           Shipping Address
                         </Label>
                         <Textarea
-                          value="A-105, Shivaji Vihar, Rajouri Garden, Rajouri Garden, Rajouri Garden, Rajouri Garden, New Delhi 110027"
+                          // value="A-105, Shivaji Vihar, Rajouri Garden, Rajouri Garden, Rajouri Garden, Rajouri Garden, New Delhi 110027"
+                          value={`${selectedOrder?.shippingAddress.addressLine1} | ${selectedOrder?.shippingAddress.addressLine2} | ${selectedOrder?.shippingAddress.nearby}`}
                           className="resize-none"
                           rows={3}
                           disabled
@@ -227,6 +255,31 @@ const OrderPage: FC<OrderPageProps> = ({}) => {
                       </div>
 
                       <div className="flex gap-x-2">
+                        <div className="grid w-full items-center gap-y-0.5">
+                          <Label className="text-xs ml-0.5" htmlFor="email">
+                            State
+                          </Label>
+                          <Input
+                            value={selectedOrder?.shippingAddress.state}
+                            type="text"
+                            placeholder={selectedOrder?.shippingAddress.state}
+                            disabled
+                          />
+                        </div>
+                        <div className="grid w-full items-center gap-y-0.5">
+                          <Label className="text-xs ml-0.5" htmlFor="email">
+                            City
+                          </Label>
+                          <Input
+                            value={selectedOrder?.shippingAddress.city}
+                            type="text"
+                            placeholder={selectedOrder?.shippingAddress.city}
+                            disabled
+                          />
+                        </div>
+                      </div>
+
+                      {/* <div className="flex gap-x-2">
                         <div className="grid w-full items-center gap-1.5">
                           <Label className="ml-1" htmlFor="email">
                             Primary Contact
@@ -249,7 +302,7 @@ const OrderPage: FC<OrderPageProps> = ({}) => {
                             disabled
                           />
                         </div>
-                      </div>
+                      </div> */}
 
                       {/* <div className="grid w-full items-center gap-1.5">
                         <Label className="ml-1" htmlFor="email">
@@ -258,8 +311,8 @@ const OrderPage: FC<OrderPageProps> = ({}) => {
                         <InputWithCopyButton text={selectedOrder?.paymentId} />
                       </div> */}
 
-                      <div className="grid w-full items-center gap-1.5">
-                        <Label className="ml-1" htmlFor="email">
+                      <div className="grid w-full items-center gap-0.5">
+                        <Label className="text-xs ml-0.5" htmlFor="email">
                           Order Id
                         </Label>
                         <InputWithCopyButton text={selectedOrder?.orderId} />
@@ -273,7 +326,7 @@ const OrderPage: FC<OrderPageProps> = ({}) => {
                       </div> */}
                     </div>
                   </DrawerHeader>
-                  <DrawerFooter>
+                  <DrawerFooter className="pt-0">
                     {selectedOrder?.paymentId && (
                       <div className="flex gap-x-2">
                         {selectedOrder?.status != 'completed' &&
@@ -312,7 +365,7 @@ const OrderPage: FC<OrderPageProps> = ({}) => {
                             onClick={() =>
                               handleActionButtonClick(
                                 selectedOrder?.paymentId,
-                                'shipping'
+                                'completed'
                               )
                             }
                             className="w-full bg-blue-500"
