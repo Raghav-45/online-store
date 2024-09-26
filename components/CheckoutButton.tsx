@@ -219,6 +219,7 @@ const CheckoutButton: FC<CheckoutButtonProps> = ({
             <form
               onSubmit={form.handleSubmit(onSubmit)}
               className="flex flex-col gap-y-1 px-4"
+              autoComplete="on"
             >
               <FormField
                 control={form.control}
@@ -232,6 +233,7 @@ const CheckoutButton: FC<CheckoutButtonProps> = ({
                         type="text"
                         id="name"
                         placeholder="John Doe"
+                        autoComplete="name"
                         {...field}
                       />
                     </FormControl>
@@ -250,6 +252,7 @@ const CheckoutButton: FC<CheckoutButtonProps> = ({
                       <Input
                         className="border-neutral-700"
                         placeholder="1234567890"
+                        autoComplete="mobile tel"
                         {...field}
                       />
                     </FormControl>
@@ -271,6 +274,7 @@ const CheckoutButton: FC<CheckoutButtonProps> = ({
                           type="text"
                           id="name"
                           placeholder="110001"
+                          autoComplete="postal-code"
                           {...field}
                         />
                         <Button className="w-full">
@@ -297,6 +301,7 @@ const CheckoutButton: FC<CheckoutButtonProps> = ({
                           type="text"
                           id="name"
                           placeholder="New Delhi"
+                          autoComplete="address-level1"
                           {...field}
                         />
                       </FormControl>
@@ -316,6 +321,7 @@ const CheckoutButton: FC<CheckoutButtonProps> = ({
                           type="text"
                           id="name"
                           placeholder="Delhi"
+                          autoComplete="address-level2"
                           {...field}
                         />
                       </FormControl>
@@ -339,6 +345,7 @@ const CheckoutButton: FC<CheckoutButtonProps> = ({
                         type="text"
                         id="name"
                         placeholder=""
+                        autoComplete="address-line1"
                         {...field}
                       />
                     </FormControl>
@@ -361,6 +368,7 @@ const CheckoutButton: FC<CheckoutButtonProps> = ({
                         type="text"
                         id="name"
                         placeholder=""
+                        autoComplete="address-line2"
                         {...field}
                       />
                     </FormControl>
@@ -383,6 +391,7 @@ const CheckoutButton: FC<CheckoutButtonProps> = ({
                         type="text"
                         id="name"
                         placeholder=""
+                        autoComplete="address-line3"
                         {...field}
                       />
                     </FormControl>
