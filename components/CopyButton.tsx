@@ -16,20 +16,18 @@ const CopyToClipboardButton = ({ text }: { text: string }) => {
   }
 
   return (
-    <div>
-      <Button
-        // className="flex-none"
-        variant="outline"
-        size="icon"
-        onClick={handleCopyClick}
-      >
-        {isCopied ? (
-          <ClipboardIcon className="h-4 w-4" />
-        ) : (
-          <CopyIcon className="h-4 w-4" />
-        )}
-      </Button>
-    </div>
+    <Button
+      className="flex-none"
+      variant="outline"
+      size="icon"
+      onClick={handleCopyClick}
+    >
+      {isCopied ? (
+        <ClipboardIcon className="h-4 w-4" />
+      ) : (
+        <CopyIcon className="h-4 w-4" />
+      )}
+    </Button>
   )
 }
 
