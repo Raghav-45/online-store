@@ -64,7 +64,8 @@ const OrderPage: FC<OrderPageProps> = ({}) => {
 
   function handleShipButtonClick(id: string) {
     console.log('handleShipButtonClick')
-    updateOrderStatus(id, 'shipping')
+    // updateOrderStatus(id, 'shipping')
+    const selectedElementIndex = allOrders?.indexOf(selectedOrder!)
   }
 
   useEffect(() => {
@@ -110,27 +111,31 @@ const OrderPage: FC<OrderPageProps> = ({}) => {
                 <TableHead>Invoice</TableHead>
                 <TableHead>Status</TableHead>
                 <TableHead>Method</TableHead>
-                <TableHead className="text-right w-[100px]">Amount</TableHead>
+                <TableHead className="text-right w-[80px]">Amount</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
               <Drawer>
                 {allOrders &&
-                  allOrders.map((e) => (
-                    <DrawerTrigger key={e.paymentId} asChild>
-                      <TableRow onClick={() => setSelectedOrder(e)}>
-                        <TableCell className="font-medium">
-                          {e.paymentId}
-                        </TableCell>
-                        <TableCell>{e.status}</TableCell>
-                        <TableCell>Credit Card</TableCell>
-                        <TableCell className="text-right">
-                          {/* $250.00 */}
-                          {e.price} INR
-                        </TableCell>
-                      </TableRow>
-                    </DrawerTrigger>
-                  ))}
+                  allOrders.map(
+                    (e) =>
+                      e &&
+                      e.paymentId && (
+                        <DrawerTrigger key={e.paymentId} asChild>
+                          <TableRow onClick={() => setSelectedOrder(e)}>
+                            <TableCell className="font-medium">
+                              {e.paymentId}
+                            </TableCell>
+                            <TableCell>{e.status}</TableCell>
+                            <TableCell>Online</TableCell>
+                            <TableCell className="text-right">
+                              {/* $250.00 */}
+                              {e.price} INR
+                            </TableCell>
+                          </TableRow>
+                        </DrawerTrigger>
+                      )
+                  )}
 
                 <DrawerContent>
                   <DrawerHeader>
