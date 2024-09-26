@@ -123,7 +123,7 @@ const OrderPage: FC<OrderPageProps> = ({}) => {
                           <DrawerTrigger key={e.paymentId} asChild>
                             <TableRow onClick={() => setSelectedOrder(e)}>
                               <TableCell className="font-medium">
-                                {e.paymentId.replace('pay_', '')}
+                                {e.paymentId}
                               </TableCell>
                               {/* <TableCell>Paid</TableCell> */}
                               <TableCell>Credit Card</TableCell>
