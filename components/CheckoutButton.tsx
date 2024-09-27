@@ -145,6 +145,30 @@ const CheckoutButton: FC<CheckoutButtonProps> = ({
             },
           })
 
+          // Send Email to Customer
+          await fetch('/api/email', {
+            method: 'POST',
+            body: JSON.stringify({
+              order: {
+                paymentId: data.razorpayPaymentId,
+                orderId: data.razorpayOrderId,
+                productId: productObject.id,
+                productName: productObject.name,
+                price: productObject.price,
+                shippingAddress: {
+                  fullName: formData.name ?? 'NA',
+                  Contact: formData.contact ?? 'NA',
+                  addressLine1: formData.addressLine1 ?? 'NA',
+                  addressLine2: formData.addressLine2 ?? 'NA',
+                  nearby: formData.nearby ?? 'NA',
+                  state: formData.state ?? 'New Delhi',
+                  city: formData.city ?? 'Delhi',
+                  postalCode: formData.pincode ?? 'NA',
+                },
+              },
+            }),
+          })
+
           // const result = await fetch('/api/verify', {
           //   method: 'POST',
           //   body: JSON.stringify(data),

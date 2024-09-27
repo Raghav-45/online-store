@@ -2,7 +2,11 @@
 
 import Navbar from '@/components/Navbar'
 import { Input } from '@/components/ui/input'
-import { getAllOrderHistory, updateOrderStatus } from '@/lib/dbUtils'
+import {
+  getAllOrderHistory,
+  getProductById,
+  updateOrderStatus,
+} from '@/lib/dbUtils'
 import { FC, useEffect, useState } from 'react'
 
 import {
@@ -56,6 +60,7 @@ const OrderPage: FC<OrderPageProps> = ({}) => {
 
   const [allOrders, setAllOrders] = useState<OrderType[]>()
   const [selectedOrder, setSelectedOrder] = useState<OrderType>()
+  const [selectedProduct, setSelectedProduct] = useState<ProductTypeWithId>()
   const [selectedFilterStatus, setSelectedFilterStatus] = useState<
     string | null
   >('New')
@@ -119,6 +124,14 @@ const OrderPage: FC<OrderPageProps> = ({}) => {
       setIsDrawerOpen(false)
     }
   }
+
+  useEffect(() => {
+    selectedOrder &&
+      selectedOrder?.productId &&
+      getProductById(selectedOrder?.productId).then((e) =>
+        setSelectedProduct(e!)
+      )
+  }, [selectedOrder])
 
   useEffect(() => {
     !allOrders && getAllOrders().then((e) => setAllOrders(e))
@@ -215,10 +228,13 @@ const OrderPage: FC<OrderPageProps> = ({}) => {
                     </div>
 
                     <div className="flex gap-x-4 pb-4">
-                      <div className="border w-1/3 aspect-square rounded-2xl">
+                      <div className="border w-1/3 aspect-square rounded-2xl content-center">
                         <img
-                          src="https://cdn.shopify.com/s/files/1/0754/3727/7491/files/t-shirt-1.png"
-                          // src={selectedOrder?.productName ?? "https://cdn.shopify.com/s/files/1/0754/3727/7491/files/t-shirt-1.png"}
+                          // src="https://cdn.shopify.com/s/files/1/0754/3727/7491/files/t-shirt-1.png"
+                          src={
+                            selectedProduct?.image ??
+                            'https://cdn.shopify.com/s/files/1/0754/3727/7491/files/t-shirt-1.png'
+                          }
                           alt="Product Image"
                         />
                       </div>
