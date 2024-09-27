@@ -45,14 +45,10 @@ import {
 
 import { Button } from '@/components/ui/button'
 import { Label } from '@/components/ui/label'
-import Link from 'next/link'
-import CopyToClipboardButton from '@/components/CopyButton'
 import InputWithCopyButton from '@/components/InputWithCopyButton'
 import { Textarea } from '@/components/ui/textarea'
 import { PlusIcon } from 'lucide-react'
-import DetailsForm from '@/components/DetailsForm'
 import { toast } from 'sonner'
-import { formatOrderDate } from '@/lib/utils'
 
 interface OrderPageProps {}
 
