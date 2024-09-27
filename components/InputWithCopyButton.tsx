@@ -8,13 +8,8 @@ interface InputWithCopyButtonProps {
 
 const InputWithCopyButton: FC<InputWithCopyButtonProps> = ({ text }) => {
   return (
-    <div className='flex gap-x-2'>
-      <Input
-        value={text}
-        type="text"
-        placeholder={text}
-        disabled
-      />
+    <div className="flex gap-x-2">
+      <Input value={text} type="text" placeholder={text} disabled />
       <CopyToClipboardButton text={text!} />
     </div>
   )
