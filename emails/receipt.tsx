@@ -1,4 +1,3 @@
-import { formatOrderDate } from '@/lib/utils'
 import {
   Body,
   Container,
@@ -81,12 +80,12 @@ export const ReceiptEmail = ({ order }: DetailsType) => (
               <Text style={global.paragraphWithBold}>Order Number</Text>
               <Text style={track.number}>{order.orderId}</Text>
             </Column>
-            <Column>
+            {/* <Column>
               <Text style={global.paragraphWithBold}>Order Date</Text>
               <Text style={track.number}>
                 {order.orderDate && formatOrderDate(order.orderDate.toDate())}
               </Text>
-            </Column>
+            </Column> */}
           </Row>
           <Row>
             <Column align="center">
