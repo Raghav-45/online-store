@@ -21,14 +21,14 @@ export default async function Page({ params }: { params: { slug: string } }) {
     <div className="overflow-y-auto">
       <Navbar />
       <section className="mx-auto grid max-w-screen-2xl gap-4 px-4 pb-4 md:grid-cols-6 md:grid-rows-2 lg:max-h-[calc(100vh-200px)]">
-        <div className="group flex flex-col h-auto w-full items-center justify-center overflow-hidden rounded-lg border bg-white hover:border-blue-600 dark:bg-black relative border-neutral-200 dark:border-neutral-800">
+        <div className="group flex flex-col h-auto w-full items-center justify-center overflow-hidden rounded-lg border bg-white hover:border-blue-600 dark:bg-black/20 drop-shadow-xl shadow-xl relative border-neutral-200 dark:border-neutral-800">
           <img
             src={currentProduct?.image!}
             alt={currentProduct?.name!}
-            className="h-full w-full object-contain transition duration-300 ease-in-out group-hover:scale-105"
+            className="h-full w-full object-contain"
           />
 
-          <div className="flex flex-col gap-y-2 pl-5 pt-2 self-start">
+          <div className="flex flex-col gap-y-2 pl-4 pt-3 self-start">
             <h3 className="mr-4 line-clamp-2 flex-grow text-4xl font-extrabold tracking-tight">
               {currentProduct?.name}
             </h3>
@@ -37,7 +37,7 @@ export default async function Page({ params }: { params: { slug: string } }) {
                 ₹{currentProduct?.price} INR
               </Badge>
             </div>
-            <p className="mr-4 line-clamp-4 flex-grow text-md leading-6">
+            <p className="mr-4 line-clamp-4 flex-grow text-sm leading-5">
               {currentProduct?.description}
             </p>
           </div>

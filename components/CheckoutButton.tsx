@@ -37,9 +37,7 @@ const formSchema = z.object({
   name: z
     .string()
     .min(2, { message: 'Name must be at least 2 characters long' }),
-  contact: z
-    .string()
-    .length(10, { message: 'Contact number must be exactly 10 digits' }),
+  contact: z.string().min(9).max(13),
   pincode: z.string().max(6, { message: 'Pincode must be 6 digits long' }),
   state: z.string(),
   city: z.string(),
@@ -118,7 +116,8 @@ const CheckoutButton: FC<CheckoutButtonProps> = ({
         currency: 'INR',
         name: 'Online Store',
         image: 'https://mev-web-app.vercel.app/icon-192x192.png',
-        description: info,
+        // description: info,
+        description: `Product Id: ${productObject.id ?? 'NA'}`,
         order_id: orderId,
         handler: async function (response: any) {
           const data = {
@@ -160,6 +159,12 @@ const CheckoutButton: FC<CheckoutButtonProps> = ({
         prefill: {
           name: formData.name,
           contact: formData.contact,
+        },
+        notes: {
+          // 'Product Id': productObject.id ?? 'NA',
+          // 'Product Name': productObject.name ?? 'NA',
+          'Customer Name': formData.name ?? 'NA',
+          'customer Contact': formData.contact ?? 'NA',
         },
         theme: {
           //   color: '#3399cc',

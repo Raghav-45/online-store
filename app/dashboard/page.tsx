@@ -52,11 +52,13 @@ import { toast } from 'sonner'
 interface OrderPageProps {}
 
 const OrderPage: FC<OrderPageProps> = ({}) => {
+  const [isDrawerOpen, setIsDrawerOpen] = useState(false)
+
   const [allOrders, setAllOrders] = useState<OrderType[]>()
   const [selectedOrder, setSelectedOrder] = useState<OrderType>()
   const [selectedFilterStatus, setSelectedFilterStatus] = useState<
     string | null
-  >('all')
+  >('New')
 
   const getAllOrders = async () => {
     const data = await getAllOrderHistory()
@@ -78,6 +80,26 @@ const OrderPage: FC<OrderPageProps> = ({}) => {
     }
   }
 
+  function calculateTotalAmount() {
+    if (!allOrders) return 0 // Handle case when allOrders is null or undefined
+
+    // Use reduce to calculate the sum of prices
+    const totalAmount = allOrders.reduce((total, order) => {
+      // Only add to total if order exists, has a paymentId, matches the selected filter status, and has a valid price
+      if (
+        order &&
+        order.paymentId &&
+        order.status === selectedFilterStatus &&
+        order.price
+      ) {
+        return total + order.price
+      }
+      return total
+    }, 0) // Initial value of total is 0
+
+    return totalAmount
+  }
+
   const handleActionButtonClick = async (
     id: string,
     newStatus: orderStatusType
@@ -93,6 +115,8 @@ const OrderPage: FC<OrderPageProps> = ({}) => {
     } catch (error) {
       console.error('Failed to update order status:', error)
       toast.error('Failed to update order status')
+    } finally {
+      setIsDrawerOpen(false)
     }
   }
 
@@ -146,7 +170,12 @@ const OrderPage: FC<OrderPageProps> = ({}) => {
               </TableRow>
             </TableHeader>
             <TableBody>
-              <Drawer>
+              <Drawer
+                open={isDrawerOpen}
+                onOpenChange={(isOpen: boolean) => {
+                  setIsDrawerOpen(isOpen)
+                }}
+              >
                 {allOrders &&
                   allOrders.map(
                     (e) =>
@@ -189,14 +218,14 @@ const OrderPage: FC<OrderPageProps> = ({}) => {
                       <div className="border w-1/3 aspect-square rounded-2xl">
                         <img
                           src="https://cdn.shopify.com/s/files/1/0754/3727/7491/files/t-shirt-1.png"
+                          // src={selectedOrder?.productName ?? "https://cdn.shopify.com/s/files/1/0754/3727/7491/files/t-shirt-1.png"}
                           alt="Product Image"
                         />
                       </div>
                       <div className="flex flex-col w-2/3 text-left py-2.5 gap-y-1.5">
                         <div className="w-full pr-2">
                           <h3 className="text-lg font-extrabold line-clamp-2 leading-none tracking-tight text-ellipsis overflow-hidden">
-                            {selectedOrder?.productName ??
-                              'Mens Sportswear Shoes'}
+                            {selectedOrder?.productName ?? 'Shoes'}
                           </h3>
                         </div>
                         <ol>
@@ -385,7 +414,10 @@ const OrderPage: FC<OrderPageProps> = ({}) => {
                 <TableCell className="text-xs" colSpan={2}>
                   Total
                 </TableCell>
-                <TableCell className="text-xs text-right">500 INR</TableCell>
+                {/* <TableCell className="text-xs text-right">500 INR</TableCell> */}
+                <TableCell className="text-xs text-right">
+                  {calculateTotalAmount()} INR
+                </TableCell>
               </TableRow>
             </TableFooter>
           </Table>

@@ -42,8 +42,9 @@ export default function Home() {
     try {
       await uploadBytes(storageRef, file) // Upload the file to Firebase Storage
       const url = await getDownloadURL(storageRef) // Get the download URL of the uploaded file
-      setUploadedUrl(url) // Set the uploaded image URL
+      // setUploadedUrl(url) // Set the uploaded image URL
       console.log('File Uploaded Successfully')
+      return url
     } catch (error) {
       console.error('Error uploading the file', error)
     } finally {
@@ -52,14 +53,14 @@ export default function Home() {
   }
 
   async function handleSubmit() {
-    await handleUpload()
+    const uploadedImageURL = await handleUpload()
 
     setIsLoading(true)
     try {
       const playlistId = await createProduct(
         productNameInput,
         productDescriptionInput,
-        uploadedUrl!,
+        uploadedImageURL!,
         productPriceInput
       )
       if (playlistId) {
