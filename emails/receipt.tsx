@@ -219,7 +219,7 @@ const track = {
     backgroundColor: '#F7F7F7',
   },
   number: {
-    margin: '12px 0 0 0',
+    margin: '4px 0 0 0',
     fontWeight: 500,
     lineHeight: '1.4',
     color: '#6F6F6F',
