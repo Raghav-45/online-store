@@ -116,11 +116,11 @@ const formSchema = z.object({
   //   message: 'Category must be selected.',
   // }),
   // subcategory: z.string().optional(),
-  // status: z.enum(['draft', 'published', 'archived'], {
-  //   errorMap: () => ({
-  //     message: 'Status must be one of Draft, Published, or Archived.',
-  //   }),
-  // }),
+  status: z.enum(['draft', 'active', 'archived'], {
+    errorMap: () => ({
+      message: 'Status must be one of Draft, Active, or Archived.',
+    }),
+  }),
   // images: z
   //   .array(z.string().url({ message: 'Each image must be a valid URL.' }))
   //   .min(1, {
@@ -419,7 +419,7 @@ export default function EditProduct() {
                     <div className="grid gap-6">
                       <div className="grid gap-3">
                         {/* <Label htmlFor="status">Status</Label> */}
-                        <Select>
+                        {/* <Select>
                           <SelectTrigger id="status" aria-label="Select status">
                             <SelectValue placeholder="Select status" />
                           </SelectTrigger>
@@ -428,7 +428,37 @@ export default function EditProduct() {
                             <SelectItem value="published">Active</SelectItem>
                             <SelectItem value="archived">Archived</SelectItem>
                           </SelectContent>
-                        </Select>
+                        </Select> */}
+
+                        <FormField
+                          control={form.control}
+                          name="status"
+                          render={({ field }) => (
+                            <FormItem>
+                              <Select
+                                onValueChange={field.onChange}
+                                defaultValue={field.value}
+                              >
+                                <FormControl>
+                                  <SelectTrigger
+                                    id="status"
+                                    aria-label="Select status"
+                                  >
+                                    <SelectValue placeholder="Select status" />
+                                  </SelectTrigger>
+                                </FormControl>
+                                <SelectContent>
+                                  <SelectItem value="draft">Draft</SelectItem>
+                                  <SelectItem value="active">Active</SelectItem>
+                                  <SelectItem value="archived">
+                                    Archived
+                                  </SelectItem>
+                                </SelectContent>
+                              </Select>
+                              <FormMessage />
+                            </FormItem>
+                          )}
+                        />
                       </div>
                     </div>
                   </CardContent>
