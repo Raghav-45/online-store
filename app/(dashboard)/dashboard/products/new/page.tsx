@@ -32,6 +32,16 @@ import {
 } from '@/components/ui/breadcrumb'
 import { Button } from '@/components/ui/button'
 import {
+  Dialog,
+  DialogClose,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from '@/components/ui/dialog'
+import {
   Card,
   CardContent,
   CardDescription,
@@ -167,7 +177,7 @@ export default function EditProduct() {
                   <CardHeader>
                     <CardTitle>Product Details</CardTitle>
                     <CardDescription>
-                      Lipsum dolor sit amet, consectetur adipiscing elit
+                      Enter information about your product.
                     </CardDescription>
                   </CardHeader>
                   <CardContent>
@@ -218,7 +228,7 @@ export default function EditProduct() {
                   <CardHeader>
                     <CardTitle>Stock</CardTitle>
                     <CardDescription>
-                      Lipsum dolor sit amet, consectetur adipiscing elit
+                      Manage your product stock, price, and size options here.
                     </CardDescription>
                   </CardHeader>
                   <CardContent>
@@ -430,7 +440,7 @@ export default function EditProduct() {
                   <CardHeader>
                     <CardTitle>Product Images</CardTitle>
                     <CardDescription>
-                      Lipsum dolor sit amet, consectetur adipiscing elit
+                      Upload images of your product to showcase it effectively.
                     </CardDescription>
                   </CardHeader>
                   <CardContent>
@@ -473,14 +483,38 @@ export default function EditProduct() {
                   <CardHeader>
                     <CardTitle>Delete Product</CardTitle>
                     <CardDescription>
-                      Lipsum dolor sit amet, consectetur adipiscing elit.
+                      Once deleted, this product will be permanently removed.
                     </CardDescription>
                   </CardHeader>
                   <CardContent>
                     <div></div>
-                    <Button size="sm" variant="destructive">
-                      Delete Product
-                    </Button>
+
+                    <Dialog>
+                      <DialogTrigger asChild>
+                        <Button size="sm" variant="destructive">
+                          Delete Product
+                        </Button>
+                      </DialogTrigger>
+                      <DialogContent>
+                        <DialogHeader>
+                          <DialogTitle>Are you absolutely sure?</DialogTitle>
+                          <DialogDescription>
+                            This action cannot be undone. This will permanently
+                            delete the product and remove all data.
+                          </DialogDescription>
+                        </DialogHeader>
+                        <DialogFooter>
+                          <DialogClose asChild>
+                            <Button variant="outline" className="w-full">
+                              Cancel
+                            </Button>
+                          </DialogClose>
+                          <Button variant="destructive" className="w-full">
+                            Confirm
+                          </Button>
+                        </DialogFooter>
+                      </DialogContent>
+                    </Dialog>
                   </CardContent>
                 </Card>
               </div>
