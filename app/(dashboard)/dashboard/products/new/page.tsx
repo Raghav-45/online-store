@@ -112,10 +112,10 @@ const formSchema = z.object({
   //     }),
   //   })
   // ),
-  // category: z.string().min(1, {
-  //   message: 'Category must be selected.',
-  // }),
-  // subcategory: z.string().optional(),
+  category: z.string().min(1, {
+    message: 'Category must be selected.',
+  }),
+  subcategory: z.string().optional(),
   status: z.enum(['draft', 'active', 'archived'], {
     errorMap: () => ({
       message: 'Status must be one of Draft, Active, or Archived.',
@@ -363,48 +363,107 @@ export default function EditProduct() {
                 <Card x-chunk="dashboard-07-chunk-2">
                   <CardHeader>
                     <CardTitle>Product Category</CardTitle>
+                    <CardDescription>
+                      Select product categories and subcategories to organize
+                      your inventory.
+                    </CardDescription>
                   </CardHeader>
                   <CardContent>
                     <div className="grid gap-6 sm:grid-cols-3">
                       <div className="grid gap-3">
                         <Label htmlFor="category">Category</Label>
-                        <Select>
-                          <SelectTrigger
-                            id="category"
-                            aria-label="Select category"
-                          >
-                            <SelectValue placeholder="Select category" />
-                          </SelectTrigger>
-                          <SelectContent>
-                            <SelectItem value="clothing">Clothing</SelectItem>
-                            <SelectItem value="electronics">
-                              Electronics
-                            </SelectItem>
-                            <SelectItem value="accessories">
-                              Accessories
-                            </SelectItem>
-                          </SelectContent>
-                        </Select>
+
+                        <FormField
+                          control={form.control}
+                          name="category"
+                          render={({ field }) => (
+                            <FormItem>
+                              <Select
+                                onValueChange={field.onChange}
+                                defaultValue={field.value}
+                              >
+                                <FormControl>
+                                  <SelectTrigger
+                                    id="category"
+                                    aria-label="Select category"
+                                  >
+                                    <SelectValue placeholder="Select category" />
+                                  </SelectTrigger>
+                                </FormControl>
+                                <SelectContent>
+                                  <SelectItem value="shoes">Shoes</SelectItem>
+                                  <SelectItem value="clothing">
+                                    Clothing
+                                  </SelectItem>
+                                  <SelectItem value="electronics">
+                                    Electronics
+                                  </SelectItem>
+                                  <SelectItem value="accessories">
+                                    Accessories
+                                  </SelectItem>
+                                </SelectContent>
+                              </Select>
+                              <FormMessage />
+                            </FormItem>
+                          )}
+                        />
                       </div>
                       <div className="grid gap-3">
                         <Label htmlFor="subcategory">
                           Subcategory (optional)
                         </Label>
-                        <Select>
-                          <SelectTrigger
-                            id="subcategory"
-                            aria-label="Select subcategory"
-                          >
-                            <SelectValue placeholder="Select subcategory" />
-                          </SelectTrigger>
-                          <SelectContent>
-                            <SelectItem value="t-shirts">T-Shirts</SelectItem>
-                            <SelectItem value="hoodies">Hoodies</SelectItem>
-                            <SelectItem value="sweatshirts">
-                              Sweatshirts
-                            </SelectItem>
-                          </SelectContent>
-                        </Select>
+
+                        <FormField
+                          control={form.control}
+                          name="subcategory"
+                          render={({ field }) => (
+                            <FormItem>
+                              <Select
+                                onValueChange={field.onChange}
+                                defaultValue={field.value}
+                              >
+                                <FormControl>
+                                  <SelectTrigger
+                                    id="subcategory"
+                                    aria-label="Select subcategory"
+                                  >
+                                    <SelectValue placeholder="Select subcategory" />
+                                  </SelectTrigger>
+                                </FormControl>
+                                <SelectContent>
+                                  <SelectItem value="sneakers">
+                                    Sneakers
+                                  </SelectItem>
+                                  <SelectItem value="formal">
+                                    Formal Shoes
+                                  </SelectItem>
+                                  <SelectItem value="boots">Boots</SelectItem>
+                                  <SelectItem value="sandals">
+                                    Sandals
+                                  </SelectItem>
+                                  <SelectItem value="sports">
+                                    Sports Shoes
+                                  </SelectItem>
+                                  <SelectItem value="loafers">
+                                    Loafers
+                                  </SelectItem>
+                                  <SelectItem value="slippers">
+                                    Slippers
+                                  </SelectItem>
+                                  <SelectItem value="heels">Heels</SelectItem>
+                                  <SelectItem value="flats">Flats</SelectItem>
+                                  <SelectItem value="running">
+                                    Running Shoes
+                                  </SelectItem>
+                                  <SelectItem value="hiking">
+                                    Hiking Shoes
+                                  </SelectItem>
+                                </SelectContent>
+                              </Select>
+                              <FormMessage />
+                            </FormItem>
+                          )}
+                        />
                       </div>
                     </div>
                   </CardContent>
