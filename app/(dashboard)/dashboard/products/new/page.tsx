@@ -483,23 +483,13 @@ export default function EditProduct() {
                         width="300"
                       />
                       <div className="grid grid-cols-3 gap-2">
-                        <button>
-                          <Image
-                            alt="Product image"
-                            className="aspect-square w-full rounded-md object-cover"
-                            height="84"
-                            src="https://github.com/raghav-45.png"
-                            width="84"
-                          />
+                        <button className="flex aspect-square w-full items-center justify-center rounded-md border border-dashed">
+                          <Upload className="h-4 w-4 text-muted-foreground" />
+                          <span className="sr-only">Upload</span>
                         </button>
-                        <button>
-                          <Image
-                            alt="Product image"
-                            className="aspect-square w-full rounded-md object-cover"
-                            height="84"
-                            src="https://github.com/raghav-45.png"
-                            width="84"
-                          />
+                        <button className="flex aspect-square w-full items-center justify-center rounded-md border border-dashed">
+                          <Upload className="h-4 w-4 text-muted-foreground" />
+                          <span className="sr-only">Upload</span>
                         </button>
                         <button className="flex aspect-square w-full items-center justify-center rounded-md border border-dashed">
                           <Upload className="h-4 w-4 text-muted-foreground" />
