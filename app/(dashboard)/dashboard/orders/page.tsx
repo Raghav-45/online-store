@@ -206,10 +206,7 @@ export default function Orders() {
                           {order.type}
                         </TableCell>
                         <TableCell className="hidden sm:table-cell">
-                          <Badge
-                            className="text-xs"
-                            variant={order.badgeVariant}
-                          >
+                          <Badge className="text-xs" variant="outline">
                             {order.status}
                           </Badge>
                         </TableCell>
