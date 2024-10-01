@@ -85,11 +85,11 @@ const formSchema = z.object({
       message: 'Status must be one of Draft, Active, or Archived.',
     }),
   }),
-  // images: z
-  //   .array(z.string().url({ message: 'Each image must be a valid URL.' }))
-  //   .min(1, {
-  //     message: 'At least one product image is required.',
-  //   }),
+  images: z
+    .array(z.string().url({ message: 'Each image must be a valid URL.' }))
+    .min(1, {
+      message: 'At least one product image is required.',
+    }),
 })
 
 export default function EditProduct() {
@@ -495,13 +495,41 @@ export default function EditProduct() {
                   </CardHeader>
                   <CardContent>
                     <div className="grid gap-2">
-                      <Image
-                        alt="Product image"
-                        className="aspect-square w-full rounded-md object-cover"
-                        height="300"
-                        src="https://github.com/raghav-45.png"
-                        width="300"
+                      <FormField
+                        control={form.control}
+                        name="images"
+                        render={({ field }) => (
+                          <FormItem>
+                            <FormLabel
+                              htmlFor="dropzone-file"
+                              className="relative flex aspect-square w-full items-center justify-center rounded-md border border-dashed cursor-pointer"
+                            >
+                              <Upload className="h-4 w-4 text-muted-foreground" />
+                              <span className="sr-only">Upload</span>
+                              <p>{form.getValues('images')}</p>
+                              {/* {imagePreview && (
+                                <Image
+                                  alt="Product image"
+                                  className="absolute aspect-square w-full rounded-md object-cover h-auto"
+                                  height="300"
+                                  src={'https://github.com/raghav-45.png'}
+                                  width="300"
+                                />
+                              )} */}
+                            </FormLabel>
+                            <FormControl>
+                              <Input
+                                id="dropzone-file"
+                                type="file"
+                                className="hidden"
+                                {...field}
+                              />
+                            </FormControl>
+                            <FormMessage />
+                          </FormItem>
+                        )}
                       />
+
                       <div className="grid grid-cols-3 gap-2">
                         <button className="flex aspect-square w-full items-center justify-center rounded-md border border-dashed">
                           <Upload className="h-4 w-4 text-muted-foreground" />
