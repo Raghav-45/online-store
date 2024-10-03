@@ -48,8 +48,9 @@ import {
   TableRow,
 } from '@/components/ui/table'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
-import { getAllOrderHistory } from '@/lib/dbUtils'
+import { getAllOrderHistory, updateOrderStatus } from '@/lib/dbUtils'
 import { useEffect, useState } from 'react'
+import { toast } from 'sonner'
 
 const currentDate = new Date()
 
@@ -72,7 +73,25 @@ export default function Orders() {
     }
 
     fetchOrders()
-  }, [])
+  }, [allOrders])
+
+  const handleActionButtonClick = async (
+    id: string,
+    newStatus: orderStatusType
+  ) => {
+    try {
+      await updateOrderStatus(id, newStatus) // Update order status in the database
+      // Update local state to reflect the new status
+      setAllOrders((prevOrders) =>
+        prevOrders!.map((order) =>
+          order.paymentId === id ? { ...order, status: newStatus } : order
+        )
+      )
+    } catch (error) {
+      console.error('Failed to update order status:', error)
+      toast.error('Failed to update order status')
+    }
+  }
 
   return (
     <main className="grid flex-1 items-start gap-4 p-4 sm:px-6 sm:py-0 md:gap-8 lg:grid-cols-3 xl:grid-cols-3">
@@ -265,8 +284,23 @@ export default function Orders() {
                 <DropdownMenuContent align="end">
                   <DropdownMenuItem>Edit</DropdownMenuItem>
                   <DropdownMenuItem>Export</DropdownMenuItem>
-                  <DropdownMenuSeparator />
-                  <DropdownMenuItem>Trash</DropdownMenuItem>
+
+                  {/* {selectedOrder?.status != 'completed' &&
+                    selectedOrder?.status != 'cancelled' && (
+                      <>
+                        <DropdownMenuSeparator />
+                        <DropdownMenuItem
+                          onClick={() =>
+                            handleActionButtonClick(
+                              selectedOrder?.paymentId,
+                              'cancelled'
+                            )
+                          }
+                        >
+                          Cancel Order
+                        </DropdownMenuItem>
+                      </>
+                    )} */}
                 </DropdownMenuContent>
               </DropdownMenu>
             </div>
@@ -411,7 +445,7 @@ export default function Orders() {
               {selectedOrder &&
                 format(selectedOrder?.orderDate.toDate(), 'PPP')}
             </div>
-            <Pagination className="ml-auto mr-0 w-auto">
+            {/* <Pagination className="ml-auto mr-0 w-auto">
               <PaginationContent>
                 <PaginationItem>
                   <Button size="icon" variant="outline" className="h-6 w-6">
@@ -426,7 +460,57 @@ export default function Orders() {
                   </Button>
                 </PaginationItem>
               </PaginationContent>
-            </Pagination>
+            </Pagination> */}
+
+            {selectedOrder?.paymentId && (
+              <div className="ml-auto mr-0 w-auto flex gap-x-2">
+                {selectedOrder?.status != 'completed' &&
+                  selectedOrder?.status != 'cancelled' && (
+                    <Button
+                      onClick={() =>
+                        handleActionButtonClick(
+                          selectedOrder?.paymentId,
+                          'cancelled'
+                        )
+                      }
+                      className="w-full bg-red-500"
+                      variant="outline"
+                    >
+                      Cancel
+                    </Button>
+                  )}
+
+                {selectedOrder?.status == 'New' && (
+                  <Button
+                    onClick={() =>
+                      handleActionButtonClick(
+                        selectedOrder?.paymentId,
+                        'shipping'
+                      )
+                    }
+                    className="w-full bg-blue-500"
+                    variant="outline"
+                  >
+                    Ship
+                  </Button>
+                )}
+
+                {selectedOrder?.status == 'shipping' && (
+                  <Button
+                    onClick={() =>
+                      handleActionButtonClick(
+                        selectedOrder?.paymentId,
+                        'completed'
+                      )
+                    }
+                    className="w-full bg-blue-500"
+                    variant="outline"
+                  >
+                    Delivered / Completed
+                  </Button>
+                )}
+              </div>
+            )}
           </CardFooter>
         </Card>
       </div>
