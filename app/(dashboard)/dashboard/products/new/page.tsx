@@ -5,7 +5,9 @@ import { useForm } from 'react-hook-form'
 import { z } from 'zod'
 
 import Image from 'next/image'
-import { ChevronLeft, PlusCircle, Upload } from 'lucide-react'
+import { ChevronLeft, Loader2Icon, PlusCircle, Upload } from 'lucide-react'
+import { ref, uploadBytes, getDownloadURL } from 'firebase/storage'
+import { storage } from '@/lib/firebaseClient'
 
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
@@ -54,6 +56,9 @@ import {
   FormLabel,
   FormMessage,
 } from '@/components/ui/form'
+import { useState } from 'react'
+import { createProduct } from '@/lib/dbUtils'
+import { toast } from 'sonner'
 
 const formSchema = z.object({
   name: z.string().min(2, {
@@ -85,14 +90,40 @@ const formSchema = z.object({
       message: 'Status must be one of Draft, Active, or Archived.',
     }),
   }),
-  images: z
-    .array(z.string().url({ message: 'Each image must be a valid URL.' }))
-    .min(1, {
-      message: 'At least one product image is required.',
-    }),
+  firstImage: z.string().url().optional(),
 })
 
 export default function EditProduct() {
+  const [file, setFile] = useState<File | null>(null) // State to store the selected file
+  const [selectedFile, setSelectedFile] = useState<string>()
+  const [isLoading, setIsLoading] = useState<boolean>()
+  const [imagePreview, setImagePreview] = useState<string | null>(null) // State to store image preview URL
+
+  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    if (event.target.files) {
+      const selectedFile = event.target.files[0]
+      setFile(selectedFile) // Set the selected file
+      setImagePreview(URL.createObjectURL(selectedFile)) // Generate and set the image preview URL
+    }
+  }
+
+  // Handle image upload and set preview
+  const handleUpload = async () => {
+    if (!file) return // Return if no file is selected
+
+    const storageRef = ref(storage, `images/${file.name}`) // Create a reference to the file in Firebase Storage
+
+    try {
+      await uploadBytes(storageRef, file) // Upload the file to Firebase Storage
+      const url = await getDownloadURL(storageRef) // Get the download URL of the uploaded file
+      // setUploadedUrl(url) // Set the uploaded image URL
+      console.log('File Uploaded Successfully')
+      return url
+    } catch (error) {
+      console.error('Error uploading the file', error)
+    }
+  }
+
   // 1. Define your form.
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -104,10 +135,29 @@ export default function EditProduct() {
   })
 
   // 2. Define a submit handler.
-  function onSubmit(values: z.infer<typeof formSchema>) {
+  async function onSubmit(values: z.infer<typeof formSchema>) {
     // Do something with the form values.
     // ✅ This will be type-safe and validated.
-    console.log(values)
+    // console.log(values)
+    const uploadedImageURL = await handleUpload()
+
+    setIsLoading(true)
+    try {
+      const playlistId = await createProduct(
+        values.name,
+        values.description,
+        uploadedImageURL!,
+        299
+      )
+      if (playlistId) {
+        toast.success('Product created successfully!')
+      }
+    } catch (error) {
+      // display error message to user
+      toast.error('Something went wrong.')
+    } finally {
+      setIsLoading(false)
+    }
   }
   return (
     <main className="grid flex-1 items-start gap-4 p-4 sm:px-6 sm:py-0 md:gap-8">
@@ -497,32 +547,33 @@ export default function EditProduct() {
                     <div className="grid gap-2">
                       <FormField
                         control={form.control}
-                        name="images"
+                        name="firstImage"
                         render={({ field }) => (
                           <FormItem>
                             <FormLabel
-                              htmlFor="dropzone-file"
+                              htmlFor="dropzone-file1"
                               className="relative flex aspect-square w-full items-center justify-center rounded-md border border-dashed cursor-pointer"
                             >
                               <Upload className="h-4 w-4 text-muted-foreground" />
                               <span className="sr-only">Upload</span>
-                              <p>{form.getValues('images')}</p>
-                              {/* {imagePreview && (
+                              {imagePreview && (
                                 <Image
                                   alt="Product image"
                                   className="absolute aspect-square w-full rounded-md object-cover h-auto"
                                   height="300"
-                                  src={'https://github.com/raghav-45.png'}
+                                  src={imagePreview}
                                   width="300"
                                 />
-                              )} */}
+                              )}
                             </FormLabel>
                             <FormControl>
                               <Input
-                                id="dropzone-file"
+                                id="dropzone-file1"
                                 type="file"
                                 className="hidden"
-                                {...field}
+                                accept="image/*"
+                                // multiple
+                                onChange={handleFileChange}
                               />
                             </FormControl>
                             <FormMessage />
@@ -592,6 +643,9 @@ export default function EditProduct() {
                 Discard
               </Button>
               <Button size="sm" type="submit">
+                {isLoading && (
+                  <Loader2Icon className="mr-2 h-5 w-5 animate-spin" />
+                )}
                 Save Product
               </Button>
             </div>

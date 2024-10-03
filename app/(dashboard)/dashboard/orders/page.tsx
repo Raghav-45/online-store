@@ -9,6 +9,8 @@ import {
   Truck,
 } from 'lucide-react'
 
+import { format, formatDistance, subDays } from 'date-fns'
+
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import {
@@ -44,50 +46,52 @@ import {
   TableRow,
 } from '@/components/ui/table'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
+import { getAllOrderHistory } from '@/lib/dbUtils'
 
 const description =
   'An orders dashboard with a sidebar navigation. The sidebar has icon navigation. The content area has a breadcrumb and search in the header. The main area has a list of recent orders with a filter and export button. The main area also has a detailed view of a single order with order details, shipping information, billing information, customer information, and payment information.'
 
-const orders = [
-  {
-    customer: 'Liam Johnson',
-    email: 'liam@example.com',
-    type: 'Sale',
-    status: 'Fulfilled',
-    date: '2023-06-23',
-    amount: '250.00',
-    badgeVariant: 'secondary',
-  },
-  {
-    customer: 'Olivia Smith',
-    email: 'olivia@example.com',
-    type: 'Refund',
-    status: 'Declined',
-    date: '2023-06-24',
-    amount: '150.00',
-    badgeVariant: 'outline',
-  },
-  {
-    customer: 'Noah Williams',
-    email: 'noah@example.com',
-    type: 'Subscription',
-    status: 'Fulfilled',
-    date: '2023-06-25',
-    amount: '350.00',
-    badgeVariant: 'secondary',
-  },
-  {
-    customer: 'Emma Brown',
-    email: 'emma@example.com',
-    type: 'Sale',
-    status: 'Fulfilled',
-    date: '2023-06-26',
-    amount: '450.00',
-    badgeVariant: 'secondary',
-  },
-]
+// const orders = [
+//   {
+//     customer: 'Liam Johnson',
+//     email: 'liam@example.com',
+//     type: 'Sale',
+//     status: 'Fulfilled',
+//     date: '2023-06-23',
+//     amount: '250.00',
+//     badgeVariant: 'secondary',
+//   },
+//   {
+//     customer: 'Olivia Smith',
+//     email: 'olivia@example.com',
+//     type: 'Refund',
+//     status: 'Declined',
+//     date: '2023-06-24',
+//     amount: '150.00',
+//     badgeVariant: 'outline',
+//   },
+//   {
+//     customer: 'Noah Williams',
+//     email: 'noah@example.com',
+//     type: 'Subscription',
+//     status: 'Fulfilled',
+//     date: '2023-06-25',
+//     amount: '350.00',
+//     badgeVariant: 'secondary',
+//   },
+//   {
+//     customer: 'Emma Brown',
+//     email: 'emma@example.com',
+//     type: 'Sale',
+//     status: 'Fulfilled',
+//     date: '2023-06-26',
+//     amount: '450.00',
+//     badgeVariant: 'secondary',
+//   },
+// ]
 
-export default function Orders() {
+export default async function Orders() {
+  let orders = await getAllOrderHistory()
   return (
     <main className="grid flex-1 items-start gap-4 p-4 sm:px-6 sm:py-0 md:gap-8 lg:grid-cols-3 xl:grid-cols-3">
       <div className="grid auto-rows-max items-start gap-4 md:gap-8 lg:col-span-2">
@@ -197,13 +201,15 @@ export default function Orders() {
                     {orders.map((order, index) => (
                       <TableRow key={index}>
                         <TableCell>
-                          <div className="font-medium">{order.customer}</div>
+                          <div className="font-medium">
+                            {order.shippingAddress.fullName}
+                          </div>
                           <div className="hidden text-sm text-muted-foreground md:inline">
-                            {order.email}
+                            {order.shippingAddress.Contact}
                           </div>
                         </TableCell>
                         <TableCell className="hidden sm:table-cell">
-                          {order.type}
+                          Sale
                         </TableCell>
                         <TableCell className="hidden sm:table-cell">
                           <Badge className="text-xs" variant="outline">
@@ -211,10 +217,14 @@ export default function Orders() {
                           </Badge>
                         </TableCell>
                         <TableCell className="hidden md:table-cell">
-                          {order.date}
+                          {formatDistance(
+                            order.orderDate.toDate(),
+                            new Date(),
+                            { addSuffix: true }
+                          )}
                         </TableCell>
                         <TableCell className="text-right">
-                          ${order.amount}
+                          ₹{order.price}
                         </TableCell>
                       </TableRow>
                     ))}
